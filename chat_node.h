@@ -18,8 +18,8 @@ typedef struct chatNodeBounds {
 } ChatNodeBounds;
 
 
-void add_chat_node(ChatNodeLL chat_node_ll, ChatNode insertion_node);
+void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node);
 ChatNode* create_chat_node(char* ip, int port_num, char* log_name);
 ChatNode* create_chat_node_ll();
-void remove_chat_node(ChatNodeLL chat_node_ll, ChatNode deletion_node);
+void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node);
 #endif
