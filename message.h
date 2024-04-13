@@ -14,7 +14,7 @@ typedef struct messageStruct {
 } Message;
 
 
-Message* create_message(char message_type, char* note, ChatNode chat_node);
+Message* create_message(char message_type, char* note, ChatNode* chat_node);
 void send_message_to_server(int socket, Message* message);
 void receive_message_from_server(int socket, Message* message);
 #endif
