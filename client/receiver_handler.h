@@ -1,4 +1,9 @@
-// libraries (chat_node.h)
+#ifndef RECEIVER_HANDLER_H
+#define RECEIVER_HANDLER_H
+
+// libraries
+#include "message.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -22,6 +27,22 @@
 #include <pthread.h>
 #include <unistd.h> 
 
+#include "text_color.h"
 
 //function prototype declarations
 void *runReceiving(void *_args);
+
+struct conn_args {
+       bool connected;
+       bool active;
+       char serverAdd[15];
+       int serverPort;
+       struct ChatNode *chatNode;
+     };
+
+
+extern bool clientActive;
+extern bool clientConnected;
+extern int clientSocket;
+
+#endif

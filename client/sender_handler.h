@@ -1,4 +1,9 @@
+#ifndef SENDER_HANDLER_H
+#define SENDER_HANDLER_H
+
 // libraries (chat_node.h)
+#include "receiver_handler.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -25,4 +30,6 @@
 
 //function prototype declarations
 void *runSending(void *_args);
-void makeConnection(int client_socket);
+bool makeConnection(char *addr, int port);
+
+#endif

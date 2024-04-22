@@ -1,6 +1,7 @@
 // libraries (chat_node.h)
-#include "receiver_handler.h"
 #include "sender_handler.h"
+#include "receiver_handler.h"
+#include "chat_node.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -25,16 +26,7 @@
 #include <pthread.h>
 #include <unistd.h> 
 
-// preprocessor directives
-#define SERVER_ADDR "142.11.199.119"
-#define PORT 23658   
 
+// preprocessor directives
 #define THREAD_COUNT 2
 
-// variables
-struct conn_args {
-       int connection;
-       bool connected;
-       bool active;
-       // struct chat_node_struct chatNode;
-     };
