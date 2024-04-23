@@ -13,13 +13,10 @@ client_handler.o : client_handler.c client_handler.h
 	$(CC) $(CFLAGS) client_handler.c 
 
 chat_node.o : chat_node.c chat_node.h
-	    $(CC) $(CFLAGS) chat_node.c
+	    $(CC) $(CFLAGS) ../chat_node.c
 
 message.o : message.c message.h
-	    $(CC) $(CFLAGS) message.c
+	    $(CC) $(CFLAGS) ../message.c
 
 clean:
-	\rm *.o
-
-cleansim:
-	/rm *.o server
+	\rm *.o server
