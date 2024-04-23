@@ -4,44 +4,37 @@
 void *runReceiving(void *_args)
     {
     struct conn_args *args = (struct conn_args *) _args;
-    char input[1000];
-    char c;
-    Message* sendMessage;
+    Message* receiveMessage = (Message*) malloc(sizeof(Message));
 
     while(args->active)
         {
+        // while connected to a server
         while(args->connected)
             {
-            // while connected to a server
 
             // reads server output
-            
+            receive_message_from_server(clientSocket, receiveMessage);
 
-            // read data into local struct using read function
-
-            switch(c)
+            switch(receiveMessage->message_type);
                 {
                 // translate control code
                 case 'J':
                 // if code is J
                     // print JOIN
                     printf(JOINED_COLOR);
-                    printf("Someone joined chat\n");
-                    printf(RESET_COLOR);
+                    printf("%s joined chat\n", receiveMessage->chat_node->log_name);
                 break;
                 case 'L':
                 // if code is L
                     // print LEAVE
                     printf(LEFT_COLOR);
-                    printf("Someone left chat\n");
-                    printf(RESET_COLOR);
+                    printf("%s left chat\n", receiveMessage->chat_node->log_name);
                 break;
                 case 'N':
                 // if code is N
                     // print message
                     printf(NOTE_COLOR);
-                    printf("Someone:");
-                    printf(RESET_COLOR);
+                    printf("%s:", receiveMessage->chat_node->log_name);
                     printf("Message here\n");
                 break;
                 case 'S':
@@ -51,13 +44,14 @@ void *runReceiving(void *_args)
                     // run shutdown
                     args->connected = false;
                     args->active = false;
-                    // exit(EXIT_SUCCESS);
                 break;
                 }
             
+            printf(RESET_COLOR);
             clientActive = args->active;
             clientConnected = args->connected;
             }
         }
+    free(receiveMessage);
     return NULL;
     }

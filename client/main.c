@@ -37,13 +37,9 @@ int main(int argc, char *argv[]) {
         fscanf(file, "%s %s %s", temp, temp, userName);
         fscanf(file, "%s %s %d", temp, temp, &userPort);
         fscanf(file, "%s %s %s", temp, temp, userAdd);
-
-        printf("%d -- %s\n", args->serverPort, args->serverAdd);
-        printf("%s: %d -- %s", userName, userPort, userAdd); 
         
         printf("You are ready to go!\n");
 
-        // !!-- malloc space for chat node data --!! (function not created yet - in outline)
         args->chatNode = create_chat_node(userAdd, userPort, userName);
         
         // thread
@@ -63,7 +59,7 @@ int main(int argc, char *argv[]) {
         pthread_join(thread[0], NULL);
         pthread_join(thread[1], NULL);
 
-	fclose(file);
+	    fclose(file);
         close(clientSocket);
         free(args);
         printf("\n");

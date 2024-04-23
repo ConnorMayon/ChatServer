@@ -21,6 +21,7 @@ void *runSending(void *_args)
                     // set code to L set message to empty
                     sendMessage = create_message(LEAVE, "", args->chatNode);
                     // send to server
+                    send_message_to_server(clientSocket, sendMessage);
 
                     // end connection to client
                     args->connected = false;
@@ -45,7 +46,9 @@ void *runSending(void *_args)
                     // connect to server
                     if(!makeConnection(args->serverAdd, args->serverPort)) exit(EXIT_FAILURE);
                     args->connected = true;
+
                     // send to server
+                    send_message_to_server(clientSocket, sendMessage);
                     
                     free(sendMessage);
                 }
@@ -65,6 +68,7 @@ void *runSending(void *_args)
                     // set code to L set message to empty
                     sendMessage = create_message(LEAVE, "", args->chatNode);
                     // send to server
+                    send_message_to_server(clientSocket, sendMessage);
 
                     args->connected = false;
                     free(sendMessage);
@@ -81,6 +85,7 @@ void *runSending(void *_args)
                     // set code to S set message to empty
                     sendMessage = create_message(SHUTDOWN_ALL, "", args->chatNode);
                     // send to server
+                    send_message_to_server(clientSocket, sendMessage);
 
                     free(sendMessage);
                 }
@@ -100,6 +105,7 @@ void *runSending(void *_args)
                     // set code to N set message to user input
                     sendMessage = create_message(NOTE, input, args->chatNode);
                     // send to server
+                    send_message_to_server(clientSocket, sendMessage);
 
                     free(sendMessage);
                 }
@@ -121,18 +127,18 @@ void *runSending(void *_args)
 // connects to server
 bool makeConnection(char *addr, int port)
     {
-    // struct sockaddr_in client_address;  
+    struct sockaddr_in client_address;  
 
-    // // create addr struct
-    // client_address.sin_family = AF_INET;
-    // client_address.sin_addr.s_addr = inet_addr(addr);
-    // client_address.sin_port = htons(port);
+    // create addr struct
+    client_address.sin_family = AF_INET;
+    client_address.sin_addr.s_addr = inet_addr(addr);
+    client_address.sin_port = htons(port);
 
-    // // connect to server socket
-    // if (connect(clientSocket, (struct sockaddr *)&client_address, sizeof(client_address)) == -1) 
-    //     {
-    //     perror("Error connecting to server!\n");
-    //     return false;
-    //     }
+    // connect to server socket
+    if (connect(clientSocket, (struct sockaddr *)&client_address, sizeof(client_address)) == -1) 
+        {
+        perror("Error connecting to server!\n");
+        return false;
+        }
     return true;
     }
