@@ -1,44 +1,25 @@
-# Many thanks to Job Vranish - see https://spin.atomicobject.com/2016/08/26/makefile-c-projects/
+CC = gcc
+DEBUG = -g
+CFLAGS = -pthread -Wall -std=c99 -pedantic -c $(DEBUG)
+LFLAGS = -pthread -Wall -std=c99 -pedantic $(DEBUG)
 
-TARGET_EXEC := chat_client
+Server : main.o client_handler.o chat_node.o message.o
+	  $(CC) $(LFLAGS) main.o client_handler.o chat_node.o message.o -o server
 
-BUILD_DIR := ./build
-SRC_DIRS  := ./src
+main.o : main.c main.h
+	       $(CC) $(CFLAGS) main.c
 
-SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
-OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
-DEPS := $(OBJS:.o=.d)
+client_handler.o : client_handler.c client_handler.h 
+	$(CC) $(CFLAGS) client_handler.c 
 
-INC_DIRS  := $(shell find $(SRC_DIRS) -type d)
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+chat_node.o : chat_node.c chat_node.h
+	    $(CC) $(CFLAGS) chat_node.c
 
-CPPFLAGS := $(INC_FLAGS) -MMD -MP
-LDFLAGS  := -pthread -lpthread
-
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
-	$(CC) $(OBJS) -o $@ $(LDFLAGS)
-
-# assembly
-$(BUILD_DIR)/%.s.o: %.s
-	$(MKDIR_P) $(dir $@)
-	$(AS) $(ASFLAGS) -c $< -o $@
-
-# c source
-$(BUILD_DIR)/%.c.o: %.c
-	$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
-
-# c++ source
-$(BUILD_DIR)/%.cpp.o: %.cpp
-	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
-
-
-.PHONY: clean
+message.o : message.c message.h
+	    $(CC) $(CFLAGS) message.c
 
 clean:
-	$(RM) -r $(BUILD_DIR)
+	\rm *.o
 
--include $(DEPS)
-
-MKDIR_P ?= mkdir -p
+cleansim:
+	/rm *.o server
