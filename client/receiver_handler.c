@@ -15,7 +15,7 @@ void *runReceiving(void *_args)
             // reads server output
             receive_message_from_server(clientSocket, receiveMessage);
 
-            switch(receiveMessage->message_type);
+            switch(receiveMessage->message_type)
                 {
                 // translate control code
                 case 'J':

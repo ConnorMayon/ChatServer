@@ -1,44 +1,31 @@
-# Many thanks to Job Vranish - see https://spin.atomicobject.com/2016/08/26/makefile-c-projects/
+CC = gcc
+DEBUG = -g
+CFLAGS = -pthread -Wall -std=c99 -pedantic -c $(DEBUG)
+LFLAGS = -pthread -Wall -std=c99 -pedantic $(DEBUG)
 
-TARGET_EXEC := chat_client
+Simulator : OS_SimDriver.o simulator.o metadataops.o configops.o simtimer.o StringUtils.o
+	  $(CC) $(LFLAGS) OS_SimDriver.o simulator.o metadataops.o configops.o simtimer.o StringUtils.o -o sim
 
-BUILD_DIR := ./build
-SRC_DIRS  := ./src
+main.o : ./server/main.c main.h
+	       $(CC) $(CFLAGS) OS_SimDriver.c
 
-SRCS := $(shell find $(SRC_DIRS) -name *.cpp -or -name *.c -or -name *.s)
-OBJS := $(SRCS:%=$(BUILD_DIR)/%.o)
-DEPS := $(OBJS:.o=.d)
+simulator.o : simulator.c simulator.h 
+	$(CC) $(CFLAGS) simulator.c 
 
-INC_DIRS  := $(shell find $(SRC_DIRS) -type d)
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+metadataops.o : metadataops.c metadataops.h
+	      $(CC) $(CFLAGS) metadataops.c
 
-CPPFLAGS := $(INC_FLAGS) -MMD -MP
-LDFLAGS  := -pthread -lpthread
+configops.o : configops.c configops.h
+	    $(CC) $(CFLAGS) configops.c
 
-$(BUILD_DIR)/$(TARGET_EXEC): $(OBJS)
-	$(CC) $(OBJS) -o $@ $(LDFLAGS)
+simtimer.o : simtimer.c simtimer.h
+	    $(CC) $(CFLAGS) simtimer.c
 
-# assembly
-$(BUILD_DIR)/%.s.o: %.s
-	$(MKDIR_P) $(dir $@)
-	$(AS) $(ASFLAGS) -c $< -o $@
-
-# c source
-$(BUILD_DIR)/%.c.o: %.c
-	$(MKDIR_P) $(dir $@)
-	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
-
-# c++ source
-$(BUILD_DIR)/%.cpp.o: %.cpp
-	$(MKDIR_P) $(dir $@)
-	$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
-
-
-.PHONY: clean
+StringUtils.o : StringUtils.c StringUtils.h
+	      $(CC) $(CFLAGS) StringUtils.c
 
 clean:
-	$(RM) -r $(BUILD_DIR)
+	\rm *.o
 
--include $(DEPS)
-
-MKDIR_P ?= mkdir -p
+cleansim:
+	/rm *.o sim

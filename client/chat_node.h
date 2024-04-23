@@ -1,6 +1,11 @@
 #ifndef CHAT_NODE_H
 #define CHAT_NODE_H
 #include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+#include <string.h>
+#include <arpa/inet.h>
+
 
 typedef struct chatNodeStruct {
     char ip[15];
@@ -8,10 +13,13 @@ typedef struct chatNodeStruct {
     char log_name[16];
 } ChatNode;
 
-typedef struct chatNodeLL {
+struct ChatNodeLL {
     ChatNode* chat_node;
-    ChatNode* next_node;
-} ChatNodeLL;
+    struct ChatNodeLL* next_node;
+};
+
+struct ChatNodeLL;
+typedef struct ChatNodeLL ChatNodeLL;
 
 typedef struct chatNodeBounds {
     ChatNode* first_node;
