@@ -11,7 +11,7 @@ int main()
 	// initialize varaibles
 	int serverSocket;                 // descriptor of server socket
 	struct sockaddr_in serverAddress; // for naming the server's listening socket
-	int loseCode = 1;
+	int yes = 1;
 	char* properties_file = "PROPERTIES.properties";
     Properties* properties;
 
@@ -26,7 +26,7 @@ int main()
 	}
 
 	// lose the pesky "Address already in use" error message
-	if (setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &loseCode, sizeof(loseCode)) == -1) 
+	if (setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1) 
 	{
 		perror("setsockopt");
 		exit(EXIT_FAILURE);
