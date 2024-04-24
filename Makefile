@@ -6,7 +6,7 @@ LFLAGS = -pthread -Wall -std=c99 -pedantic $(DEBUG)
 Client : main_client.o client/receiver_handler.o client/sender_handler.o chat_node.o message.o
 	  $(CC) $(LFLAGS) main_client.o client/receiver_handler.o client/sender_handler.o chat_node.o message.o -o client.exe
 
-Server : server/main_server.o server/client_handler.o chat_node.o message.o
+Server : main_server.o server/client_handler.o chat_node.o message.o
 	  $(CC) $(LFLAGS) server/main_server.o server/client_handler.o chat_node.o message.o -o server.exe
 
 main_client.o : client/main.c client/main.h
@@ -31,4 +31,4 @@ client_handler.o : server/client_handler.c server/client_handler.h
 	$(CC) $(CFLAGS) server/client_handler.c 
 
 clean:
-	\rm *.o client/client server/server
+	\rm *.o client.exe server.exe main_client client/receiver_handler.o client/sender_handler.o
