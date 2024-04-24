@@ -29,5 +29,12 @@
 #include <signal.h>
 
 // function declarations
-void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBounds* bounds);
+void* talk_to_client(void *_args);
+
+struct args
+{
+	int clientSocket;
+	ChatNodeLL* chatroomList;
+	ChatNodeBounds* bounds;
+};
 #endif
