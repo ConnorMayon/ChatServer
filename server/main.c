@@ -12,7 +12,7 @@ int main()
 	int serverSocket;			// descriptor of server socket
 	int clientSocket;			// descriptor of the client socket
 	struct sockaddr_in serverAddress; // for naming the server's listening socket
-	char* properties_file = "PROPERTIES.properties";
+	//char* properties_file = "PROPERTIES.properties";
 	Properties* properties;
 	pthread_t thread;
 	int yes = 1;
