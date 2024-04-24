@@ -6,7 +6,7 @@
 #include "client_handler.h"
 
 // preprocessor directives
-#define SERVER_ADDR "142.11.199.119"
+#define SERVER_ADDR "23.254.138.220"
 #define PORT 23658
 #define THREAD_COUNT 2
 
