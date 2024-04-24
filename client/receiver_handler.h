@@ -2,7 +2,7 @@
 #define RECEIVER_HANDLER_H
 
 // libraries
-#include "message.h"
+#include "../message.h"
 
 #include <stdio.h>
 #include <stdlib.h>

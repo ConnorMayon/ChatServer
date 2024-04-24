@@ -14,7 +14,7 @@ void *runReceiving(void *_args)
 
             // reads server output
             receive_message_from_server(clientSocket, receiveMessage);
-
+	    ChatNode thisNode = receiveMessage->chat_node;
             switch(receiveMessage->message_type)
                 {
                 // translate control code
@@ -22,19 +22,19 @@ void *runReceiving(void *_args)
                 // if code is J
                     // print JOIN
                     printf(JOINED_COLOR);
-                    printf("%s joined chat\n", receiveMessage->chat_node->log_name);
+                    printf("%s joined chat\n", thisNode.log_name);
                 break;
                 case 'L':
                 // if code is L
                     // print LEAVE
                     printf(LEFT_COLOR);
-                    printf("%s left chat\n", receiveMessage->chat_node->log_name);
+                    printf("%s left chat\n", thisNode.log_name);
                 break;
                 case 'N':
                 // if code is N
                     // print message
                     printf(NOTE_COLOR);
-                    printf("%s:", receiveMessage->chat_node->log_name);
+                    printf("%s:", thisNode.log_name);
                     printf("Message here\n");
                 break;
                 case 'S':
