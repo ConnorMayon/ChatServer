@@ -29,6 +29,6 @@ typedef struct chatNodeBounds {
 
 void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node);
 ChatNode* create_chat_node(char* ip, int port_num, char* log_name);
-ChatNode* create_chat_node_bounds();
+ChatNodeBounds* create_chat_node_bounds();
 void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node);
 #endif
