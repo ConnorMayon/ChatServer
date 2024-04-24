@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
         pthread_join(thread[0], NULL);
         pthread_join(thread[1], NULL);
 
-	    fclose(file);
+	fclose(file);
         close(clientSocket);
         free(args);
         printf("\n");
