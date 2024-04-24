@@ -13,7 +13,7 @@ int main()
 	int clientSocket;			// descriptor of the client socket
 	struct sockaddr_in serverAddress; // for naming the server's listening socket
 	char* properties_file = "PROPERTIES.properties";
-    Properties* properties;
+	Properties* properties;
 	pthread_t thread;
 	int yes = 1;
 	
@@ -21,10 +21,10 @@ int main()
 	ChatNodeLL *chatroomList;
 	
 	// create chat node bounds
-	ChatNodeBounds bounds = create_chat_node_bounds();
+	ChatNodeBounds* bounds = create_chat_node_bounds();
 
 	// read properties
-	Properties* properties = property_read_properties(properties_file);
+	properties = property_read_properties(properties_file);
 
 	// ignore SIGPIPE, sent when client disconnected
 	signal(SIGPIPE, SIG_IGN);
@@ -46,7 +46,7 @@ int main()
 	// bind the socket
 	serverAddress.sin_family = AF_INET;
 	serverAddress.sin_addr.s_addr = inet_addr(SERVER_ADDR);
-	serverAddress.sin_port = htons(SERVER_PORT);
+	serverAddress.sin_port = htons(PORT);
 
 	// binding unnamed socket to a particular port
 	if (bind(serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) != 0) 
@@ -72,7 +72,7 @@ int main()
 		printf("\nServer with PID %d: accepted client\n", getpid());
 
 		// handle the client
-		pthread_create(&thread, NULL, handleClient, (void*)&clientSocket);
+		pthread_create(&thread, NULL, talk_to_client, (void*)&clientSocket);
 	}
 	
 	return EXIT_SUCCESS;

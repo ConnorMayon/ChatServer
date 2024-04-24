@@ -4,6 +4,7 @@
 #include "client_handler.h"
 #include "chat_node.h"
 #include "message.h"
+#include "properties.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -30,6 +31,3 @@
 #define SERVER_ADDR "142.11.199.119"
 #define PORT 23658
 #define THREAD_COUNT 2
-
-
-#endif
