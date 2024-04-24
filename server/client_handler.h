@@ -2,7 +2,7 @@
 
 
 // libraries
-#include "`../chat_node.h"
+#include "../chat_node.h"
 #include "../message.h"
 #include <stdio.h>
 #include <stdlib.h>
