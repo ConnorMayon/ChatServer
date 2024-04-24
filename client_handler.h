@@ -1,10 +1,11 @@
 // precompiler directives
+#ifndef CLIENT_HANDLER_H
+#define CLIENT_HANDLER_H
 
 // libraries
-#include "client_handler.h"
-#include "chat_node.h"
-#include "message.h"
-#include "properties.h"
+#include "../chat_node.h"
+#include "../message.h"
+#include "../properties.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
@@ -27,7 +28,6 @@
 #include <unistd.h>
 #include <signal.h>
 
-// preprocessor directives
-#define SERVER_ADDR "142.11.199.119"
-#define PORT 23658
-#define THREAD_COUNT 2
+// function declarations
+void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBounds* bounds);
+#endif
