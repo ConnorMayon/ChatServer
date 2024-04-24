@@ -10,7 +10,7 @@
 typedef struct messageStruct {
     char message_type;
     char note[64];
-    ChatNode* chat_node;
+    ChatNode chat_node;
 } Message;
 
 
