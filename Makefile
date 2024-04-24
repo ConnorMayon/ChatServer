@@ -9,13 +9,13 @@ Client : main_client.o receiver_handler.o sender_handler.o chat_node.o message.o
 Server : main_server.o client_handler.o chat_node.o message.o
 	  $(CC) $(LFLAGS) main_server.o client_handler.o chat_node.o message.o -o server
 
-main_client.o : main.c main.h
+main_client.o : client/main.c client/main.h
 	       $(CC) $(CFLAGS) client/main.c
 
-receiver_handler.o : receiver_handler.c receiver_handler.h 
+receiver_handler.o : client/receiver_handler.c client/receiver_handler.h 
 	$(CC) $(CFLAGS) client/receiver_handler.c 
 
-sender_handler.o : sender_handler.c sender_handler.h
+sender_handler.o : client/sender_handler.c client/sender_handler.h
 	      $(CC) $(CFLAGS) client/sender_handler.c
 
 chat_node.o : chat_node.c chat_node.h
@@ -24,10 +24,10 @@ chat_node.o : chat_node.c chat_node.h
 message.o : message.c message.h
 	    $(CC) $(CFLAGS) message.c
 
-main_server.o : main.c main.h
+main_server.o : server/main.c server/main.h
 	       $(CC) $(CFLAGS) server/main.c
 
-client_handler.o : client_handler.c client_handler.h 
+client_handler.o : server/client_handler.c server/client_handler.h 
 	$(CC) $(CFLAGS) server/client_handler.c 
 
 clean:
