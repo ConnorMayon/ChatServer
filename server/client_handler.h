@@ -1,5 +1,6 @@
 // Precompiler directives
-
+#ifndef CLIENT_HANDLER_H
+#define CLIENT_HANDLER_H
 
 // libraries
 #include "../chat_node.h"

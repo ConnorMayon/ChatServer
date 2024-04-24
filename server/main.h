@@ -1,4 +1,6 @@
 // precompiler directives
+#ifndef SERVER_MAIN_H
+#define SERVER_MAIN_H
 
 // libraries
 #include "client_handler.h"
