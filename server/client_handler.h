@@ -5,6 +5,7 @@
 // libraries
 #include "../chat_node.h"
 #include "../message.h"
+#include "../properties.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
