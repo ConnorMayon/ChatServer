@@ -37,7 +37,7 @@ struct conn_args {
        bool active;
        char serverAdd[15];
        int serverPort;
-       struct ChatNode *chatNode;
+       ChatNode* chatNode;
      };
 
 
