@@ -3,13 +3,11 @@ DEBUG = -g
 CFLAGS = -pthread -Wall -std=c99 -pedantic -c $(DEBUG)
 LFLAGS = -pthread -Wall -std=c99 -pedantic $(DEBUG)
 
-all: Client Server
-
 Client : main_client.o client/receiver_handler.o client/sender_handler.o chat_node.o message.o
 	  $(CC) $(LFLAGS) main_client.o client/receiver_handler.o client/sender_handler.o chat_node.o message.o -o client.exe
 
-Server : main_server.o server/client_handler.o chat_node.o message.o
-	  $(CC) $(LFLAGS) main_server.o server/client_handler.o chat_node.o message.o -o server.exe
+Server : main_server.o server/client_handler.o chat_node.o message.o properties.o
+	  $(CC) $(LFLAGS) main_server.o server/client_handler.o chat_node.o message.o properties.o -o server.exe
 
 main_client.o : client/main.c client/main.h
 	       $(CC) $(CFLAGS) client/main.c -o main_client.o
@@ -25,6 +23,9 @@ chat_node.o : chat_node.c chat_node.h
 
 message.o : message.c message.h
 	    $(CC) $(CFLAGS) message.c
+	    
+properties.o : properties.c properties.h
+	    $(CC) $(CFLAGS) properties.c
 
 main_server.o : server/main.c server/main.h
 	       $(CC) $(CFLAGS) server/main.c -o main_server.o
