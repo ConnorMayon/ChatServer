@@ -1,7 +1,7 @@
 // libraries (chat_node.h)
 #include "sender_handler.h"
 #include "receiver_handler.h"
-#include "chat_node.h"
+#include "../chat_node.h"
 
 #include <stdio.h>
 #include <stdlib.h>
