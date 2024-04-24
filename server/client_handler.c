@@ -5,7 +5,7 @@
 
 // functions
 // function to talk to a client
-void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBounds* bounds)
+void* talk_to_client(void *_args)
 {
 	// initialize varaibles
 	char buffOut[2048];
@@ -14,6 +14,7 @@ void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBound
 	char chatNodeip[15];
 	int chatNodePort;
 	char chatNodeName[16];
+	struct args* args = (struct args*) _args;
 	
 	
 	// while the client is connected
@@ -21,22 +22,22 @@ void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBound
 	{
 		// read the message sent from the client in the stages sent
 			// read the identifier
-		read(cliSoc, &identifier, sizeof(identifier));
+		read(args->clientSocket, &identifier, sizeof(identifier));
 		
 			// read the message
-		read(cliSoc, &message, sizeof(message));
+		read(args->clientSocket, &message, sizeof(message));
 		
 			// read the sender ip
-		read(cliSoc, &chatNodeip, sizeof(chatNodeip));
+		read(args->clientSocket, &chatNodeip, sizeof(chatNodeip));
 		
 			// read the sender port
-		read(cliSoc, &chatNodePort, sizeof(chatNodePort));
+		read(args->clientSocket, &chatNodePort, sizeof(chatNodePort));
 		
 			// read the sender name
-		read(cliSoc, &chatNodeName, sizeof(chatNodeName));
+		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
 		// create a pointer for the chatroom list
-		ChatNodeLL *ptr = nodeList;
+		ChatNodeLL *ptr = args->chatroomList;
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(identifier)
@@ -50,7 +51,7 @@ void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBound
 				// send the join message to the chatroom for the requesting client
 				while(ptr->chat_node != NULL)
 				{
-					write(cliSoc, &buffOut, sizeof(buffOut));
+					write(args->clientSocket, &buffOut, sizeof(buffOut));
 					ptr = ptr->next_node;
 				}
 			
@@ -59,14 +60,13 @@ void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBound
 				ChatNode* newNode = create_chat_node(chatNodeip, chatNodePort, chatNodeName);
 				
 					// add the new clinet to the chat node list
-				add_chat_node(nodeList, newNode);
-				clicont++;
+				add_chat_node(args->chatroomList, newNode);
 				
 					// set the new node as the first bounds if not already set
-				if(bounds->first_node == NULL) bounds->first_node = newNode;
+				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
 				
 					// otherwise set the new node as the last bounds
-				else bounds->last_node = newNode;
+				else args->bounds->last_node = newNode;
 				
 				// end of this case
 				break;				
@@ -75,16 +75,16 @@ void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBound
 			case LEAVE:
 			
 				// disconect the requesting client
-				identifier = "L";
-				write(cliSoc, &identifier, sizeof(identifier));
+				identifier = LEAVE;
+				write(args->clientSocket, &identifier, sizeof(identifier));
 				
 				// send the leave message to the entire chatroom
-				identifier = "N";
+				identifier = NOTE;
 				sprintf(buffOut, "%s has left\n", chatNodeName);
 				while(ptr->chat_node != NULL)
 				{
-					write(cliSoc, &identifier, sizeof(identifier));
-					write(cliSoc, &buffOut, sizeof(buffOut));
+					write(args->clientSocket, &identifier, sizeof(identifier));
+					write(args->clientSocket, &buffOut, sizeof(buffOut));
 					ptr = ptr->next_node;
 				}
 				
@@ -98,7 +98,7 @@ void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBound
 				sprintf(buffOut, "L\n");
 				while(ptr->chat_node != NULL)
 				{
-					write(cliSoc, &buffOut, sizeof(buffOut));
+					write(args->clientSocket, &buffOut, sizeof(buffOut));
 					ptr = ptr->next_node;
 				}
 				
@@ -115,13 +115,13 @@ void talk_to_client(int cliSoc, ChatNodeLL* nodeList, int clicont, ChatNodeBound
 					if(ptr->chat_node->log_name != chatNodeName)
 					{
 						// write the indentifier
-						write(cliSoc, &identifier, sizeof(identifier));
+						write(args->clientSocket, &identifier, sizeof(identifier));
 						
 						// write the message
-						write(cliSoc, &message, sizeof(message));
+						write(args->clientSocket, &message, sizeof(message));
 						
 						// write the sender
-						write(cliSoc, &chatNodeName, sizeof(chatNodeName));
+						write(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 					}
 					ptr = ptr->next_node;
 				}
