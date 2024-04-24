@@ -36,4 +36,4 @@ client_handler.o : server/client_handler.c server/client_handler.h
 	$(CC) $(CFLAGS) server/client_handler.c 
 
 clean:
-	\rm *.o client.exe server.exe main_client client/receiver_handler.o client/sender_handler.o
+	\rm *.o client.exe server.exe client/receiver_handler.o client/sender_handler.o server/client_handler.o
