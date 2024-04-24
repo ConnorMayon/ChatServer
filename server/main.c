@@ -16,9 +16,10 @@ int main()
 	Properties* properties;
 	pthread_t thread;
 	int yes = 1;
+	struct args* args = malloc(sizeof(struct args));	// initalize the args struct
 	
 	// create chat node list
-	ChatNodeLL *chatroomList;
+	ChatNodeLL *chatroomList = (ChatNodeLL*)malloc(sizeof(ChatNodeLL));
 	
 	// create chat node bounds
 	ChatNodeBounds* bounds = create_chat_node_bounds();
@@ -65,14 +66,22 @@ int main()
 	// have the server print that it's ready
 	printf("Ready for Connections\n");
 
+	
+	// set the needed values into the args struct
+	args->chatroomList = chatroomList;
+	args->bounds = bounds;
+
+
 	// infinite loop for server
 	while(true)
 	{
 		clientSocket = accept(serverSocket, NULL, NULL);
 		printf("\nServer with PID %d: accepted client\n", getpid());
+		
+		args->clientSocket = clientSocket;
 
 		// handle the client
-		pthread_create(&thread, NULL, talk_to_client, (void*)&clientSocket);
+		pthread_create(&thread, NULL, talk_to_client, args);
 	}
 	
 	return EXIT_SUCCESS;
