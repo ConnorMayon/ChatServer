@@ -15,10 +15,10 @@ receiver_handler.o : receiver_handler.c receiver_handler.h
 sender_handler.o : sender_handler.c sender_handler.h
 	      $(CC) $(CFLAGS) sender_handler.c
 
-chat_node.o : chat_node.c chat_node.h
+chat_node.o : ../chat_node.c ../chat_node.h
 	    $(CC) $(CFLAGS) ../chat_node.c
 
-message.o : message.c message.h
+message.o : ../message.c ../message.h
 	    $(CC) $(CFLAGS) ../message.c
 
 clean:
