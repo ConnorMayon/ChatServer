@@ -27,7 +27,7 @@
 #include <pthread.h>
 #include <unistd.h> 
 
-#include "../text_color.h"
+#include "text_color.h"
 
 //function prototype declarations
 void *runReceiving(void *_args);
