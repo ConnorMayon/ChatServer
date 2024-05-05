@@ -115,6 +115,9 @@ void* talk_to_client(void *_args)
 				// determine sender
 				while(ptr->chat_node->log_name != chatNodeName)
 				{
+					// DEBUG: CHECK PTR LOG_NAME AND CHATNODENAME
+					printf("ptr->chat_node->log_name: %s, chatNodeName: %s\n", ptr->chat_node->log_name, chatNodeName);
+					
 					// DEBUG: MOVING TO NEXT NODE
 					printf("MOVING TO NEXT NODE\n");
 					
