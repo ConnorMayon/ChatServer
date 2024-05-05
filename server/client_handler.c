@@ -91,11 +91,7 @@ void* talk_to_client(void *_args)
 				printf("THREAD: %d\n", newNode->thread_num);
 				
 					// add the new clinet to the chat node list
-				add_chat_node(ptr, newNode);
-				
-				
-				printf("Chat node: %i\n\n", t_node->chat_node);
-				
+				add_chat_node(ptr, newNode);				
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
 				printf("PASSED MAKING CHAT NODE\n");
