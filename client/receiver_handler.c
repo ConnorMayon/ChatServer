@@ -20,7 +20,6 @@ void *runReceiving()
             receive_message_from_server(clientSocket, receiveMessage);
 	    ChatNode thisNode = receiveMessage->chat_node;
 	    printf("%s", thisNode.log_name);
-	    pthread_mutex_lock(&mutex);
             switch(receiveMessage->message_type)
                 {
                 // translate control code
@@ -48,13 +47,11 @@ void *runReceiving()
                     // print message
                     printf("Shutting down");
                     // run shutdown
-                    clientConnected = false;
                     exit(EXIT_SUCCESS);
                 break;
                 }
             
             printf(RESET_COLOR);
-            pthread_mutex_unlock(&mutex);
             }
         }
     free(receiveMessage);
