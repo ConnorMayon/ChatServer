@@ -44,14 +44,6 @@ void* talk_to_client(void *_args)
 			// read the sender name
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
-		// DEBUG CHECK IF READING
-		printf("\n\n=========NEW CASE=========\n");
-		printf("IDENTIFER: %i\n", identifier);
-		printf("MESSAGE: %s\n", message);
-		printf("CHATNODEIP: %s\n", chatNodeip);
-		printf("CHATNODEPORT: %i\n", chatNodePort);
-		printf("CHATNODENAME: %s\n", chatNodeName);
-		
 		// determine what identifier was sent in the message and start switch statement
 		switch(identifier)
 		{
@@ -83,41 +75,15 @@ void* talk_to_client(void *_args)
 				
 					// add the new node's thread number manually
 				newNode->thread_num = args->clientSocket;
-
-				// DEBUG: PRINT THE NEW CHAT NODE
-				printf("IP: %s,  ", newNode->ip);
-				printf("PORT: %d,  ", newNode->port_num);
-				printf("NAME: %s,  ", newNode->log_name);
-				printf("THREAD: %d\n", newNode->thread_num);
 				
 					// add the new clinet to the chat node list
-				add_chat_node(ptr, newNode);				
-				
-				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
-				printf("PASSED MAKING CHAT NODE\n");
+				add_chat_node(ptr, newNode);
 				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
 				
 					// otherwise set the new node as the last bounds
 				else args->bounds->last_node = newNode;
-
-				// DEBUG: TEST THE LINKED LIST CHAT NODE
-				printf("---TESTING LINKED LIST---\n");
-				ptr = args->chatroomList;
-				while(ptr->next_node != NULL)
-				{
-					// go to the next chat node
-					ptr = ptr->next_node;
-					
-					printf("IP: %s,  ", ptr->chat_node->ip);
-					printf("PORT: %d,  ", ptr->chat_node->port_num);
-					printf("NAME: %s,  ", ptr->chat_node->log_name);
-					printf("THREAD: %d\n", ptr->chat_node->thread_num);
-				}
-				
-				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
-				printf("PASSED SETTING CHAT NODE BOUNDS\n");
 				
 				// end of this case
 				break;				
