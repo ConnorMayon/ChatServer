@@ -8,7 +8,6 @@
 void* talk_to_client(void *_args)
 {
 	// initialize varaibles
-	char buffOut[64];
 	char identifier;
 	char message[64];
 	char chatNodeip[15];
@@ -81,7 +80,7 @@ void* talk_to_client(void *_args)
 				else args->bounds->last_node = newNode;
 
 				// form the message struct so we can send a message to all the other clients
-				outputMessage = create_message(JOIN, buffOut, newNode);
+				outputMessage = create_message(JOIN, message, newNode);
 				
 				// send the join message to the chatroom for the requesting client
 				while(ptr->next_node != NULL)
@@ -109,27 +108,15 @@ void* talk_to_client(void *_args)
 				// move past the null head
 				ptr = ptr->next_node;
 
-				// DEBUG: CHECK IF PASSED NULL HEAD
-				printf("PASSED THE NULL HEAD ON PTR\n");
-
 				// determine sender
 				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
 				{
-					// DEBUG: CHECK PTR LOG_NAME AND CHATNODENAME
-					printf("ptr->chat_node->log_name: %s, chatNodeName: %s.\n", ptr->chat_node->log_name, chatNodeName);
-					
-					// DEBUG: MOVING TO NEXT NODE
-					printf("MOVING TO NEXT NODE\n");
-					
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
-
-				// DEBUG: FOUND SENDER
-				printf("FOUND SENDER\n");
 				
 				// form the message struct so we can send a message to all the other clients
-				outputMessage = create_message(LEAVE, buffOut, ptr->chat_node);
+				outputMessage = create_message(LEAVE, message, ptr->chat_node);
 				
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
@@ -166,9 +153,9 @@ void* talk_to_client(void *_args)
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
-			
+				
 				// form the message struct so we can send a message to all the other clients before shutting down
-				outputMessage = create_message(SHUTDOWN_ALL, buffOut, ptr->chat_node);
+				outputMessage = create_message(SHUTDOWN_ALL, message, ptr->chat_node);
 				
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
@@ -190,33 +177,45 @@ void* talk_to_client(void *_args)
 			case NOTE:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				printf("IDENTIFIER READ: NOTE\n");
+				
+				// determine sender
+				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
+				{
+					// go to the next chat node
+					ptr = ptr->next_node;
+				}
+				
+				// form the message struct so we can send the note to all the other clients before shutting down
+				outputMessage = create_message(SHUTDOWN_ALL, message, ptr->chat_node);
+
+				// reset the pointer to the head.
+				ptr = args->chatroomList;
+				
 				// send the message to everyone but the sender
 				while(ptr->next_node != NULL)
 				{
+					// DEBUG: CHECK IF CORRECTLY GOT INSIDE THE WHILE LOOP
+					printf("INSIDE THE WHILE LOOP\n");
+					
+					// move to the next node
 					ptr = ptr->next_node;
 					
 					// make sure the current node isn't the sender
 					if(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
 					{
-						// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
-						printf("WRITING TO THREAD: %d\n", ptr->chat_node->thread_num);
-						printf("MESSAGE: %s\n", message);
-						printf("CHAT NODE NAME: %s\n", chatNodeName);
+						// DEBUG: CHECK IF THE IF STATEMENT IS ENTERED
+						printf("IF STATEMENT ENTERED\n");
+						//printf("WRITING TO THREAD: %d\n", ptr->chat_node->thread_num);
+						//printf("MESSAGE: %s\n", message);
+						//printf("CHAT NODE NAME: %s\n", chatNodeName);
 						
-						// write the indentifier
-						write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
-						
-						// write the message
-						write(ptr->chat_node->thread_num, &message, sizeof(message));
-						
-						// write the sender
-						write(ptr->chat_node->thread_num, &chatNodeName, sizeof(chatNodeName));
+						// write the message to the current chat node
+						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
 				// DEBUG: CHECK IF PASSED THE SENDING OF THE NOTE TO ALL CLIENTS
 				printf("PASSED THE SENDING OF THE NOTE TO ALL CLIENTS\n");
 				// end of this case
-				
 		// end of the switch statement
 		}
 	}
