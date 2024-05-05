@@ -103,7 +103,7 @@ void* talk_to_client(void *_args)
 				else args->bounds->last_node = newNode;
 
 				// DEBUG: TEST THE LINKED LIST CHAT NODE
-				printf("---TESTING LINKED LIST---");
+				printf("---TESTING LINKED LIST---\n");
 				wrkptr = ptr;
 				while(wrkptr->chat_node != NULL)
 				{
