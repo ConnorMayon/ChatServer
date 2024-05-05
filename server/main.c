@@ -66,27 +66,39 @@ int main()
 	
 	// have the server print that it's ready
 	printf("Ready for Connections\n");
-
 	
 	// set the needed values into the args struct
 	args->chatroomList = chatroomList;
 	args->bounds = bounds;
 	
-	// mutex lock
-	pthread_mutex_lock(&clients_mutex);
-	
 	// infinite loop for server
 	while(true)
 	{
+		// mutex lock
+		pthread_mutex_lock(&clients_mutex);
+		
 		clientSocket = accept(serverSocket, NULL, NULL);
 		printf("\nServer with PID %d: accepted client\n", getpid());
 		
 		args->clientSocket = clientSocket;
-
+		
+		// set up the thread
+		pthread_t thread;
+		
 		// handle the client
-		pthread_create(&thread, NULL, talk_to_client, args);
+		if(pthread_create(&thread, NULL, talk_to_client, args))
+		{
+			printf("Server with PID %d: error creating thread\n", getpid());
+			exit(EXIT_FAILURE);
+		}
+		
+		// detach thread
+		if(pthread_detach(thread))
+		{
+			printf("Server with PID %d: error detaching thread\n", getpid());
+			exit(EXIT_FAILURE);
+		}
 	}
-	pthread_mutex_unlock(&clients_mutex);
 	
 	return EXIT_SUCCESS;
 }
