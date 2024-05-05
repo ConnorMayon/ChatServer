@@ -12,8 +12,8 @@ int main()
 	int serverSocket;			// descriptor of server socket
 	int clientSocket;			// descriptor of the client socket
 	struct sockaddr_in serverAddress; // for naming the server's listening socket
-	//char* properties_file = "PROPERTIES.properties";
-	//Properties* properties;
+	char* properties_file = "PROPERTIES.properties";
+	Properties* properties;
 	pthread_t thread;
 	int yes = 1;
 	struct args* args = malloc(sizeof(struct args));	// initalize the args struct
@@ -25,7 +25,7 @@ int main()
 	ChatNodeBounds* bounds = create_chat_node_bounds();
 
 	// read properties
-	//properties = property_read_properties(properties_file);
+	properties = property_read_properties(properties_file);
 
 	// ignore SIGPIPE, sent when client disconnected
 	signal(SIGPIPE, SIG_IGN);
