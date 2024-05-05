@@ -103,7 +103,6 @@ void* talk_to_client(void *_args)
 				printf("---PRINTING CHAT NODE LIST---\n");
 				for(int i = 0; i < 5; i++)
 				{
-					printf("NODE: %d,  ", i);
 					printf("IP: %s,  ", ptr->chat_node->ip);
 					printf("PORT: %d,  ", ptr->chat_node->port_num);
 					printf("NAME: %s,  ", ptr->chat_node->log_name);
