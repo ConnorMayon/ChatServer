@@ -96,6 +96,8 @@ void* talk_to_client(void *_args)
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
+				// lock mutex
+				pthread_mutex_unlock(&clients_mutex);
 				
 				// end of this case
 				break;				
@@ -143,6 +145,9 @@ void* talk_to_client(void *_args)
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
 				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
+
+				// lock mutex
+				pthread_mutex_unlock(&clients_mutex);
 				
 				// close the thread between the sender and server
 				close(args->clientSocket);
@@ -178,6 +183,9 @@ void* talk_to_client(void *_args)
 					// write the message to the current chat node
 					send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 				}
+
+				// lock mutex
+				pthread_mutex_unlock(&clients_mutex);
 				
 				// shutdown the server
 				exit(EXIT_SUCCESS);
@@ -219,11 +227,12 @@ void* talk_to_client(void *_args)
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
+				// lock mutex
+				pthread_mutex_unlock(&clients_mutex);
+				
 				// end of this case
 			// end of the switch statement
 		}
-		// lock mutex
-		pthread_mutex_unlock(&clients_mutex);
 	}
 	// this will never be reached
 	//return NULL;
