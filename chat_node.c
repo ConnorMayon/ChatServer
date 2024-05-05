@@ -10,9 +10,6 @@ void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node) {
     temp_node = temp_node->next_node;
     temp_node->chat_node = insertion_node;
     printf("\n\nTemp node: %i\n", temp_node->chat_node);
-    ChatNodeLL* t_node = chat_node_ll;
-    while(t_node->next_node != NULL) t_node = t_node->next_node;
-    printf("Chat node: %i\n\n", t_node->chat_node);
 }
 
 ChatNode* create_chat_node(char* ip, int port_num, char* log_name) {
