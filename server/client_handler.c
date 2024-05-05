@@ -106,6 +106,9 @@ void* talk_to_client(void *_args)
 				// DEBUG: CHECK IF FINDING CASE
 				printf("CASE: LEAVE\n");
 
+				// move past the null head.
+				ptr = ptr->next_node;
+
 				// determine sender
 				while(ptr->chat_node->log_name != chatNodeName)
 				{
