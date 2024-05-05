@@ -52,9 +52,6 @@ void* talk_to_client(void *_args)
 		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
 		printf("\n\n\n====== NEW CASE ======\n");
-
-		// lock mutex
-		pthread_mutex_lock(&clients_mutex);
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(identifier)
@@ -63,7 +60,10 @@ void* talk_to_client(void *_args)
 			case JOIN:
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
 				printf("CASE: JOIN");
-			
+
+				// lock mutex
+				pthread_mutex_lock(&clients_mutex);
+				
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
 				ChatNode* newNode = create_chat_node(chatNodeip, chatNodePort, chatNodeName);
@@ -104,7 +104,10 @@ void* talk_to_client(void *_args)
 			case LEAVE:
 				// DEBUG: CHECK IF FINDING CASE
 				printf("CASE: LEAVE\n");
-
+				
+				// lock mutex
+				pthread_mutex_lock(&clients_mutex);
+				
 				// move past the null head
 				ptr = ptr->next_node;
 
@@ -147,6 +150,12 @@ void* talk_to_client(void *_args)
 				
 			// if the SHUTDOWN ALL identifier was sent
 			case SHUTDOWN_ALL:
+				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
+				printf("CASE: SHUTDOWN ALL\n");
+				
+				// lock mutex
+				pthread_mutex_lock(&clients_mutex);
+				
 				// determine sender
 				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
 				{
@@ -176,7 +185,10 @@ void* talk_to_client(void *_args)
 			// if the NOTE identifier was sent
 			case NOTE:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
-				printf("IDENTIFIER READ: NOTE\n");
+				printf("CASE: NOTE\n");
+
+				// lock mutex
+				pthread_mutex_lock(&clients_mutex);
 				
 				// move past the null head
 				ptr = ptr->next_node;
@@ -209,9 +221,9 @@ void* talk_to_client(void *_args)
 				}
 				// end of this case
 			// end of the switch statement
-			// lock mutex
-			pthread_mutex_unlock(&clients_mutex);
 		}
+		// lock mutex
+		pthread_mutex_unlock(&clients_mutex);
 	}
 	// this will never be reached
 	//return NULL;
