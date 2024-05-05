@@ -101,7 +101,6 @@ void* talk_to_client(void *_args)
 				
 			// if the LEAVE identifier was sent
 			case LEAVE:
-			
 				// DEBUG: CHECK IF FINDING CASE
 				printf("CASE: LEAVE\n");
 
@@ -184,12 +183,20 @@ void* talk_to_client(void *_args)
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
+				// DEBUG: CHECK IF SENDER FOUND
+				printf("SENDER HAS BEEN FOUND\n");
 				
 				// form the message struct so we can send the note to all the other clients before shutting down
 				outputMessage = create_message(SHUTDOWN_ALL, message, ptr->chat_node);
 
+				// DEBUG: CHECK IF CREATING MESSAGE
+				printf("MESSAGE STRUCT CREATED\n");
+
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
+
+				// DEBUG: CHECK IF PTR SET BACK TO HEAD
+				printf("PTR SET BACK TO HEAD\n");
 				
 				// send the message to everyone but the sender
 				while(ptr->next_node != NULL)
