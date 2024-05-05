@@ -18,9 +18,8 @@ int main(int argc, char *argv[]) {
 
     // set conn_args
     struct conn_args *args = malloc (sizeof (struct conn_args));
-    args->connected = false;
     
-    clientConnected = args->connected;
+    clientConnected = false;
 
     // read properties
     char* paramFile = argv[1];
@@ -47,7 +46,7 @@ int main(int argc, char *argv[]) {
             printf("Error creating sending thread");
         }
 
-        if(pthread_create(&thread[1], NULL, runReceiving, args))
+        if(pthread_create(&thread[1], NULL, runReceiving, NULL))
         {
             printf("Error creating receiving thread");        
         }

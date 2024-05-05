@@ -16,7 +16,7 @@ void *runSending(void *_args)
         if(strcmp(input, "LEAVE\n") == 0)
             {
             // if client said LEAVE
-                if(args->connected)
+                if(clientConnected)
                 {
                 // if client is connected
                     // set code to L set message to empty
@@ -25,7 +25,7 @@ void *runSending(void *_args)
                     send_message_to_server(clientSocket, sendMessage);
 
                     // end connection to client
-                    args->connected = false;
+                    clientConnected = false;
                     free(sendMessage);
                     close(clientSocket);
                 }
@@ -39,7 +39,7 @@ void *runSending(void *_args)
         else if(strcmp(input, "JOIN\n") == 0)
             {
             // if client said JOIN
-                if(!args->connected)
+                if(!clientConnected)
                 {
                 // if client is not connected
                     // set code to J set message to empty
@@ -47,7 +47,7 @@ void *runSending(void *_args)
 
                     // connect to server
                     if(!makeConnection(args->serverAdd, args->serverPort)) exit(EXIT_FAILURE);
-                    args->connected = true;
+                    clientConnected = true;
 
                     // send to server
                     send_message_to_server(clientSocket, sendMessage);
@@ -64,7 +64,7 @@ void *runSending(void *_args)
         else if(strcmp(input, "SHUTDOWN\n") == 0)
             {
             // if client said SHUTDOWN 
-                if(args->connected)
+                if(clientConnected)
                 {
                 // if client is connected
                     // set code to L set message to empty
@@ -73,7 +73,7 @@ void *runSending(void *_args)
                     send_message_to_server(clientSocket, sendMessage);
 
                     // end connection to client
-                    args->connected = false;
+                    clientConnected = false;
                     free(sendMessage);
                     close(clientSocket);
                 }
@@ -83,7 +83,7 @@ void *runSending(void *_args)
         else if(strcmp(input, "SHUTDOWN ALL\n") == 0)
             {
             // if client said SHUTDOWN ALL 
-                if(args->connected)
+                if(clientConnected)
                 {
                 // if client is connected
                     // set code to S set message to empty
@@ -103,7 +103,7 @@ void *runSending(void *_args)
         else
             {
             // if client said anything else
-                if(args->connected)
+                if(clientConnected)
                 {
                 // if client is connected
                     // set code to N set message to user input
@@ -122,9 +122,8 @@ void *runSending(void *_args)
             }
 
 
-        clientConnected = args->connected;
-        
         pthread_mutex_unlock(&mutex);
+        
         }
     return NULL;
     }

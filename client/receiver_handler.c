@@ -3,14 +3,18 @@
 
 
 // function that handles recieving from client
-void *runReceiving(void *_args)
+void *runReceiving()
     {
-    struct conn_args *args = (struct conn_args *) _args;
     Message* receiveMessage = (Message*) malloc(sizeof(Message));
+    bool temp;
     while(true)
         {
+        if(!clientConnected)
+		{
+		temp = clientConnected;
+		}
         // while connected to a server
-        while(args->connected)
+        while(clientConnected)
             {
             // reads server output
             receive_message_from_server(clientSocket, receiveMessage);
@@ -37,20 +41,19 @@ void *runReceiving(void *_args)
                     // print message
                     printf(NOTE_COLOR);
                     printf("%s:", thisNode.log_name);
-                    printf("Message here\n");
+                    printf("%s\n", receiveMessage->note);
                 break;
                 case 'S':
                 // if code is S
                     // print message
                     printf("Shutting down");
                     // run shutdown
-                    args->connected = false;
+                    clientConnected = false;
                     exit(EXIT_SUCCESS);
                 break;
                 }
             
             printf(RESET_COLOR);
-            clientConnected = args->connected;
             pthread_mutex_unlock(&mutex);
             }
         }

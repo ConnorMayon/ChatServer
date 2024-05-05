@@ -30,10 +30,9 @@
 #include "../text_color.h"
 
 //function prototype declarations
-void *runReceiving(void *_args);
+void *runReceiving();
 
 struct conn_args {
-       bool connected;
        char serverAdd[15];
        int serverPort;
        ChatNode* chatNode;
