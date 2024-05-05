@@ -28,12 +28,16 @@ void *runReceiving()
                     // print JOIN
                     printf(JOINED_COLOR);
                     printf("%s joined chat", thisNode.log_name);
+		    printf(RESET_COLOR);
+		    printf("\n");
                 break;
                 case 'L':
                 // if code is L
                     // print LEAVE
                     printf(LEFT_COLOR);
                     printf("%s left chat", thisNode.log_name);
+		    printf(RESET_COLOR);
+		    printf("\n");
                 break;
                 case 'N':
                 // if code is N
@@ -41,6 +45,8 @@ void *runReceiving()
                     printf(NOTE_COLOR);
                     printf("%s:", thisNode.log_name);
                     printf("%s", receiveMessage->note);
+		    printf(RESET_COLOR);
+		    printf("\n");
                 break;
                 case 'S':
                 // if code is S
@@ -51,8 +57,6 @@ void *runReceiving()
                 break;
                 }
             
-            printf(RESET_COLOR);
-            printf("\n");
             }
         }
     free(receiveMessage);
