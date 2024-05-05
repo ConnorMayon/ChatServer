@@ -39,6 +39,13 @@ void* talk_to_client(void *_args)
 			// read the sender name
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
+		// DEBUG CHECK IF READING
+		printf("IDENTIFER: %s\n", identifier);
+		printf("MESSAGE: %s\n", message);
+		printf("CHATNODEIP: %s\n", chatNodeip);
+		printf("CHATNODEPORT: %s\n", chatNodePort);
+		printf("CHATNODENAME: %s\n", chatNodeName);
+		
 		// determine what identifier was sent in the message and start switch statement
 		switch(identifier)
 		{
@@ -47,6 +54,9 @@ void* talk_to_client(void *_args)
 			
 				// form the join message that will be sent to the chatroom
 				sprintf(buffOut, "%s has joined\n", chatNodeName);
+				
+				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
+				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
 			
 				// send the join message to the chatroom for the requesting client
 				while(ptr->chat_node != NULL)
@@ -57,6 +67,9 @@ void* talk_to_client(void *_args)
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
+				
+				// DEBUG: CHECK IF MAKES IT PASSED SENDING TO ALL CLIENTS
+				printf("PASSED SENDING JOIN MESSAGE TO ALL CLIENTS");
 			
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
@@ -68,11 +81,17 @@ void* talk_to_client(void *_args)
 					// add the new clinet to the chat node list
 				add_chat_node(args->chatroomList, newNode);
 				
+				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
+				printf("PASSED MAKING CHAT NODE");
+				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
 				
 					// otherwise set the new node as the last bounds
 				else args->bounds->last_node = newNode;
+				
+				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
+				printf("PASSED SETTING CHAT NODE BOUNDS");
 				
 				// end of this case
 				break;				
@@ -80,9 +99,15 @@ void* talk_to_client(void *_args)
 			// if the LEAVE identifier was sent
 			case LEAVE:
 			
+				// DEBUG: CHECK IF FINDING CASE
+				printf("CASE: LEAVE\n");
+			
 				// disconect the requesting client
 				identifier = LEAVE;
-				write(args->clientSocket/*????*/, &identifier, sizeof(identifier));
+				write(args->clientSocket, &identifier, sizeof(identifier));
+				
+				// DEBUG: CHECK IF PASSED THE LEAVE MESSAGE WRITE COMMAND
+				printf("PASSED THE LEAVE MESSAGE WRITE COMMAND");
 				
 				// create the leave message to sent to the chatroom
 				identifier = NOTE;
@@ -95,6 +120,9 @@ void* talk_to_client(void *_args)
 					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 					ptr = ptr->next_node;
 				}
+				
+				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
+				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS");
 				
 				// end of this case
 				break;
