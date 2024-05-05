@@ -16,7 +16,6 @@ void *runReceiving()
         // while connected to a server
         while(clientConnected)
             {
-            printf("Waiting for recieve!\n");
             // reads server output
             receive_message_from_server(clientSocket, receiveMessage);
 	    ChatNode thisNode = receiveMessage->chat_node;
