@@ -3,7 +3,7 @@
 #define SERVER_MAIN_H
 
 // libraries
-#include "client_handler.h"
+#include "sender_handler.h"
 
 // preprocessor directives
 #define SERVER_ADDR "142.11.199.119"
