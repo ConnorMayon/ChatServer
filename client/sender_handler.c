@@ -1,5 +1,5 @@
 #include "sender_handler.h"
-
+pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 // function that handles sending to client
 void *runSending(void *_args)
     {
@@ -9,9 +9,11 @@ void *runSending(void *_args)
 
     while(args->active)
         {
+        
         // continuously reads client input
         fgets(input, sizeof(input), stdin);
         // translantes client input into control code
+	pthread_mutex_lock(&mutex);
         if(strcmp(input, "LEAVE\n") == 0)
             {
             // if client said LEAVE
@@ -121,6 +123,7 @@ void *runSending(void *_args)
 
         clientActive = args->active;
         clientConnected = args->connected;
+        pthread_mutex_unlock(&mutex);
         }
     return NULL;
     }
