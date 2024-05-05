@@ -177,12 +177,12 @@ void* talk_to_client(void *_args)
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				printf("IDENTIFIER READ: NOTE\n");
 				
+				// move past the null head
+				ptr = ptr->next_node;
+				
 				// determine sender
 				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
 				{
-					// DEBUG: CHECK THE TWO STRINGS
-					printf("log_name: %s, chatNodeName: %s.\n", ptr->chat_node->log_name, chatNodeName);
-					
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
