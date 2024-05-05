@@ -26,7 +26,7 @@ void* talk_to_client(void *_args)
 	// while the client is connected
 	while(1)
 	{
-		ChatNodeLL *wrkptr = *ptr;
+		ChatNodeLL *wrkptr = ptr;
 		
 		// read the message sent from the client in the stages sent
 			// read the identifier
