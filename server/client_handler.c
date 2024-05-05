@@ -190,7 +190,7 @@ void* talk_to_client(void *_args)
 				printf("SENDER HAS BEEN FOUND\n");
 				
 				// form the message struct so we can send the note to all the other clients before shutting down
-				outputMessage = create_message(SHUTDOWN_ALL, message, ptr->chat_node);
+				outputMessage = create_message(NOTE, message, ptr->chat_node);
 
 				// DEBUG: CHECK IF CREATING MESSAGE
 				printf("MESSAGE STRUCT CREATED\n");
