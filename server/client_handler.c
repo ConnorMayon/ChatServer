@@ -40,6 +40,7 @@ void* talk_to_client(void *_args)
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
 		// DEBUG CHECK IF READING
+		printf("=========NEW CASE=========");
 		printf("IDENTIFER: %i\n", identifier);
 		printf("MESSAGE: %s\n", message);
 		printf("CHATNODEIP: %s\n", chatNodeip);
@@ -69,7 +70,7 @@ void* talk_to_client(void *_args)
 				}
 				
 				// DEBUG: CHECK IF MAKES IT PASSED SENDING TO ALL CLIENTS
-				printf("PASSED SENDING JOIN MESSAGE TO ALL CLIENTS");
+				printf("PASSED SENDING JOIN MESSAGE TO ALL CLIENTS\n");
 			
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
@@ -82,7 +83,7 @@ void* talk_to_client(void *_args)
 				add_chat_node(args->chatroomList, newNode);
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
-				printf("PASSED MAKING CHAT NODE");
+				printf("PASSED MAKING CHAT NODE\n");
 				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
@@ -91,7 +92,7 @@ void* talk_to_client(void *_args)
 				else args->bounds->last_node = newNode;
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
-				printf("PASSED SETTING CHAT NODE BOUNDS");
+				printf("PASSED SETTING CHAT NODE BOUNDS\n");
 				
 				// end of this case
 				break;				
@@ -107,7 +108,7 @@ void* talk_to_client(void *_args)
 				write(args->clientSocket, &identifier, sizeof(identifier));
 				
 				// DEBUG: CHECK IF PASSED THE LEAVE MESSAGE WRITE COMMAND
-				printf("PASSED THE LEAVE MESSAGE WRITE COMMAND");
+				printf("PASSED THE LEAVE MESSAGE WRITE COMMAND\n");
 				
 				// create the leave message to sent to the chatroom
 				identifier = NOTE;
@@ -122,7 +123,7 @@ void* talk_to_client(void *_args)
 				}
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
-				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS");
+				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
 				
 				// end of this case
 				break;
