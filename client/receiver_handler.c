@@ -1,6 +1,5 @@
 #include "receiver_handler.h"
 
-pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
 
 // function that handles recieving from client
 void *runReceiving(void *_args)
@@ -16,7 +15,6 @@ void *runReceiving(void *_args)
             // reads server output
             receive_message_from_server(clientSocket, receiveMessage);
 	    ChatNode thisNode = receiveMessage->chat_node;
-	    pthread_mutex_lock(&mutex);
 	    printf("%s", thisNode.log_name);
             switch(receiveMessage->message_type)
                 {
@@ -53,7 +51,6 @@ void *runReceiving(void *_args)
             printf(RESET_COLOR);
             clientActive = args->active;
             clientConnected = args->connected;
-            pthread_mutex_unlock(&mutex);
             }
         }
     free(receiveMessage);
