@@ -3,7 +3,6 @@
 
 // constants
 
-// functions
 // function to talk to a client
 void* talk_to_client(void *_args)
 {
