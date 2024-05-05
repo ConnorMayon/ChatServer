@@ -106,21 +106,33 @@ void* talk_to_client(void *_args)
 				// DEBUG: CHECK IF FINDING CASE
 				printf("CASE: LEAVE\n");
 
-				// move past the null head.
+				// move past the null head
 				ptr = ptr->next_node;
+
+				// DEBUG: CHECK IF PASSED NULL HEAD
+				printf("PASSED THE NULL HEAD ON PTR\n");
 
 				// determine sender
 				while(ptr->chat_node->log_name != chatNodeName)
 				{
+					// DEBUG: MOVING TO NEXT NODE
+					printf("MOVING TO NEXT NODE\n");
+					
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
+
+				// DEBUG: FOUND SENDER
+				printf("FOUND SENDER\n");
 				
 				// form the message struct so we can send a message to all the other clients
 				outputMessage = create_message(LEAVE, buffOut, ptr->chat_node);
 				
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
+
+				// DEBUG: START SENDING MESSAGE TO THE CHATROOM
+				printf("SENDING MESSAGE TO CHATROOM\n");
 				
 				// send the leave message to the rest of the chatroom
 				while(ptr->next_node != NULL)
