@@ -125,6 +125,12 @@ void* talk_to_client(void *_args)
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
 				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
 				
+				// drop the thread
+				pthread_detach(pthread_self());
+				
+				// DEBUG: CHECK IF PASSED THE THREAD BEING DROPPED
+				printf("PASSED THE THREAD BEING DROPPED");
+				
 				// end of this case
 				break;
 				
