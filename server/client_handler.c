@@ -93,8 +93,8 @@ void* talk_to_client(void *_args)
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
 
-				ChatNodeLL *t_node = ptr;
-				while (t_node->next_node != NULL) t_node = t_node->next_node;
+				ChatNodeLL *t_node = wrkptr;
+				//while (t_node->next_node != NULL) t_node = t_node->next_node;
 				printf("Chat node: %i\n\n", t_node->chat_node);
 				
 				
@@ -182,7 +182,7 @@ void* talk_to_client(void *_args)
 			case NOTE:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				printf("IDENTIFIER READ: NOTE\n");
-				
+				wrkptr = ptr;
 				// send the message to everyone but the sender
 				while(wrkptr->chat_node != NULL)
 				{
