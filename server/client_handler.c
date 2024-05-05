@@ -196,7 +196,7 @@ void* talk_to_client(void *_args)
 					ptr = ptr->next_node;
 					
 					// make sure the current node isn't the sender
-					if(ptr->chat_node->log_name != chatNodeName)
+					if(strcmp(ptr->chat_node->log_name, chatNodeName) == 0)
 					{
 						// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
 						printf("WRITING TO THREAD: %d\n", ptr->chat_node->thread_num);
