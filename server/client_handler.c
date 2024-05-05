@@ -26,8 +26,10 @@ void* talk_to_client(void *_args)
 	// while the client is connected
 	while(1)
 	{
+		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
+		printf("====== NEW CASE ======");
 		
-		// set the ptr
+		// set the ptr to the (null) head
 		ptr = args->chatroomList;
 		
 		// read the message sent from the client in the stages sent
