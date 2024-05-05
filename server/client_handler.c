@@ -159,9 +159,18 @@ void* talk_to_client(void *_args)
 				// send the message to everyone but the sender
 				while(ptr->chat_node != NULL)
 				{
+					// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
+					printf("WHILE LOOP ENTERED\n");
+					
 					// make sure the current node isn't the sender
 					if(ptr->chat_node->log_name != chatNodeName)
 					{
+						// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
+						printf("IF STATEMENT ENTERED\n");
+						printf("WRITING TO THREAD: %d\n", thread_num);
+						printf("WRITING TO THREAD: %s\n", message);
+						printf("WRITING TO THREAD: %s\n", chatNodeName);
+						
 						// write the indentifier
 						write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
 						
