@@ -144,6 +144,8 @@ void* talk_to_client(void *_args)
 				
 			// if the NOTE identifier was sent
 			case NOTE:
+				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
+				printf("IDENTIFIER READ: NOTE\n");
 				
 				// send the message to everyone but the sender
 				while(ptr->chat_node != NULL)
@@ -162,6 +164,8 @@ void* talk_to_client(void *_args)
 					}
 					ptr = ptr->next_node;
 				}
+				// DEBUG: CHECK IF PASSED THE SENDING OF THE NOTE TO ALL CLIENTS
+				printf("PASSED THE SENDING OF THE NOTE TO ALL CLIENTS\n");
 				// end of this case
 				
 		// end of the switch statement
