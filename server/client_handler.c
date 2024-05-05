@@ -65,6 +65,7 @@ void* talk_to_client(void *_args)
 				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
 			
 				// send the join message to the chatroom for the requesting client
+				/*
 				while(wrkptr->next_node != NULL)
 				{
 					// write to the current chat node
@@ -73,6 +74,7 @@ void* talk_to_client(void *_args)
 					// go to the next chat node
 					wrkptr = wrkptr->next_node;
 				}
+				*/
 				
 				// DEBUG: CHECK IF MAKES IT PASSED SENDING TO ALL CLIENTS
 				printf("PASSED SENDING JOIN MESSAGE TO ALL CLIENTS\n");
