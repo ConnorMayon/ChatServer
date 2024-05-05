@@ -8,12 +8,13 @@
 void* talk_to_client(void *_args)
 {
 	// initialize varaibles
-	char buffOut[2048];
+	char buffOut[64];
 	char identifier;
 	char message[64];
 	char chatNodeip[15];
 	int chatNodePort;
 	char chatNodeName[16];
+	int senderThread;
 	struct args* args = (struct args*) _args;
 
 	// lock mutex
@@ -21,11 +22,17 @@ void* talk_to_client(void *_args)
 	
 	// create a pointer for the chatroom list
 	ChatNodeLL *ptr = args->chatroomList;
+
+	if(args->clientSocket == NULL)
+	{
+		close(args->clientSocket);
+		pthread_exit();
+	}
 	
 	
 	// while the client is connected
 	while(1)
-	{	
+	{
 		// set the ptr to the (null) head
 		ptr = args->chatroomList;
 		
@@ -53,22 +60,8 @@ void* talk_to_client(void *_args)
 		{
 			// if the JOIN identifier was sent
 			case JOIN:
-			
-				// form the join message that will be sent to the chatroom
-				sprintf(buffOut, "%s has joined the chat!\n", chatNodeName);
-				
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
 				printf("CASE: JOIN");
-			
-				// send the join message to the chatroom for the requesting client
-				while(ptr->next_node != NULL)
-				{
-    					// go to the next chat node
-					ptr = ptr->next_node;
-     
-					// write to the current chat node
-					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
-				}
 			
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
@@ -85,6 +78,23 @@ void* talk_to_client(void *_args)
 				
 					// otherwise set the new node as the last bounds
 				else args->bounds->last_node = newNode;
+
+				// form the message struct so we can send a message to all the other clients
+				Message* outputMessage = create_message(JOIN, buffOut, newNode);
+				
+				// send the join message to the chatroom for the requesting client
+				while(ptr->next_node != NULL)
+				{
+    					// go to the next chat node
+					ptr = ptr->next_node;
+					
+					// if the selected chat node doesn't equal the newly created node
+					if(!ptr->chat_node == newNode)
+					{
+						// write the message to the current chat node
+						outputMessage(ptr->chat_node->thread_num, outputMessage);
+					}
+				}
 				
 				// end of this case
 				break;				
@@ -94,47 +104,64 @@ void* talk_to_client(void *_args)
 			
 				// DEBUG: CHECK IF FINDING CASE
 				printf("CASE: LEAVE\n");
-			
-				// disconect the requesting client
-				identifier = LEAVE;
-				write(args->clientSocket, &identifier, sizeof(identifier));
+
+				// determine sender
+				while(ptr->chat_node->log_name != chatNodeName)
+				{
+					// go to the next chat node
+					ptr = ptr->next_node;
+				}
 				
-				// DEBUG: CHECK IF PASSED THE LEAVE MESSAGE WRITE COMMAND
-				printf("PASSED THE LEAVE MESSAGE WRITE COMMAND\n");
+				// form the message struct so we can send a message to all the other clients
+				Message* outputMessage = create_message(LEAVE, buffOut, ptr->chat_node);
 				
-				// create the leave message to sent to the chatroom
-				identifier = NOTE;
-				sprintf(buffOut, "%s has left\n", chatNodeName);
+				// reset the pointer to the head.
+				ptr = args->chatroomList;
 				
-				// send the leave message to the entire chatroom
+				// send the leave message to the rest of the chatroom
 				while(ptr->next_node != NULL)
 				{
+					// go to the next chat node
 					ptr = ptr->next_node;
-					write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
-					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
+					
+					// if the selected chat node is not the leaving node
+					if(ptr->chat_node->log_name != chatNodeName)
+					{
+						// write the message to the current chat node
+						outputMessage(ptr->chat_node->thread_num, outputMessage);
+					}
 				}
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
 				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
 				
-				// drop the thread
-				pthread_detach(pthread_self());
-				
-				// DEBUG: CHECK IF PASSED THE THREAD BEING DROPPED
-				printf("PASSED THE THREAD BEING DROPPED\n");
-				
-				// end of this case
-				break;
+				// close the thread between the sender and server
+				close(args->clientSocket);
+				pthread_exit();
 				
 			// if the SHUTDOWN ALL identifier was sent
 			case SHUTDOWN_ALL:
+				// determine sender
+				while(ptr->chat_node->log_name != chatNodeName)
+				{
+					// go to the next chat node
+					ptr = ptr->next_node;
+				}
 			
-				// send all connected clients the shutdown code
-				sprintf(buffOut, "L\n");
+				// form the message struct so we can send a message to all the other clients before shutting down
+				Message* outputMessage = create_message(SHUTDOWN_ALL, buffOut, ptr->chat_node);
+				
+				// reset the pointer to the head.
+				ptr = args->chatroomList;
+				
+				// send the leave message to the entire chatroom
 				while(ptr->next_node != NULL)
 				{
+					// go to the next chat node
 					ptr = ptr->next_node;
-					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
+					
+					// write the message to the current chat node
+					outputMessage(ptr->chat_node->thread_num, outputMessage);
 				}
 				
 				// shutdown the server
