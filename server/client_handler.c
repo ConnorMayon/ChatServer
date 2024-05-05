@@ -180,6 +180,9 @@ void* talk_to_client(void *_args)
 				// determine sender
 				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
 				{
+					// DEBUG: CHECK THE TWO STRINGS
+					printf("log_name: %s, chatNodeName: %s.\n"ptr->chat_node->log_name, chatNodeName);
+					
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
