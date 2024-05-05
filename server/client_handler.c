@@ -15,6 +15,7 @@ void* talk_to_client(void *_args)
 	int chatNodePort;
 	char chatNodeName[16];
 	int senderThread;
+	Message* outputMessage;
 	struct args* args = (struct args*) _args;
 
 	// lock mutex
@@ -26,7 +27,7 @@ void* talk_to_client(void *_args)
 	if(args->clientSocket == NULL)
 	{
 		close(args->clientSocket);
-		pthread_exit();
+		pthread_exit(EXIT_FAILURE);
 	}
 	
 	
@@ -80,7 +81,7 @@ void* talk_to_client(void *_args)
 				else args->bounds->last_node = newNode;
 
 				// form the message struct so we can send a message to all the other clients
-				Message* outputMessage = create_message(JOIN, buffOut, newNode);
+				outputMessage = create_message(JOIN, buffOut, newNode);
 				
 				// send the join message to the chatroom for the requesting client
 				while(ptr->next_node != NULL)
@@ -92,7 +93,7 @@ void* talk_to_client(void *_args)
 					if(!ptr->chat_node == newNode)
 					{
 						// write the message to the current chat node
-						outputMessage(ptr->chat_node->thread_num, outputMessage);
+						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
 				
@@ -113,7 +114,7 @@ void* talk_to_client(void *_args)
 				}
 				
 				// form the message struct so we can send a message to all the other clients
-				Message* outputMessage = create_message(LEAVE, buffOut, ptr->chat_node);
+				outputMessage = create_message(LEAVE, buffOut, ptr->chat_node);
 				
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
@@ -128,7 +129,7 @@ void* talk_to_client(void *_args)
 					if(ptr->chat_node->log_name != chatNodeName)
 					{
 						// write the message to the current chat node
-						outputMessage(ptr->chat_node->thread_num, outputMessage);
+						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
 				
@@ -137,7 +138,7 @@ void* talk_to_client(void *_args)
 				
 				// close the thread between the sender and server
 				close(args->clientSocket);
-				pthread_exit();
+				pthread_exit(EXIT_SUCCESS);
 				
 			// if the SHUTDOWN ALL identifier was sent
 			case SHUTDOWN_ALL:
@@ -149,7 +150,7 @@ void* talk_to_client(void *_args)
 				}
 			
 				// form the message struct so we can send a message to all the other clients before shutting down
-				Message* outputMessage = create_message(SHUTDOWN_ALL, buffOut, ptr->chat_node);
+				outputMessage = create_message(SHUTDOWN_ALL, buffOut, ptr->chat_node);
 				
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
@@ -161,7 +162,7 @@ void* talk_to_client(void *_args)
 					ptr = ptr->next_node;
 					
 					// write the message to the current chat node
-					outputMessage(ptr->chat_node->thread_num, outputMessage);
+					send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 				}
 				
 				// shutdown the server
