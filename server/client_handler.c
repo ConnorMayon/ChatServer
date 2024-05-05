@@ -15,6 +15,9 @@ void* talk_to_client(void *_args)
 	int chatNodePort;
 	char chatNodeName[16];
 	struct args* args = (struct args*) _args;
+
+	// lock mutex
+	pthread_mutex_unlock(&clients_mutex);
 	
 	// create a pointer for the chatroom list
 	ChatNodeLL *ptr = args->chatroomList;
