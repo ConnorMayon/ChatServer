@@ -17,7 +17,6 @@ int main()
 	struct sockaddr_in serverAddress; // for naming the server's listening socket
 	//char* properties_file = "PROPERTIES.properties";
 	Properties* properties;
-	pthread_t thread;
 	int yes = 1;
 	struct args* args = malloc(sizeof(struct args));	// initalize the args struct
 	
