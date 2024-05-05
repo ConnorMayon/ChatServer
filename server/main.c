@@ -68,7 +68,7 @@ int main()
 	// have the server print that it's ready
 	printf("Ready for Connections\n");
 	
-	// set the needed values into the args struct
+	// set the chatroom list and bounds into the args struct
 	args->chatroomList = chatroomList;
 	args->bounds = bounds;
 	
@@ -77,10 +77,11 @@ int main()
 	{
 		// mutex lock
 		pthread_mutex_lock(&clients_mutex);
-		
+
+		// create the client socket
 		clientSocket = accept(serverSocket, NULL, NULL);
-		printf("\nServer with PID %d: accepted client\n", getpid());
-		
+
+		// store the client socket into the argument struct
 		args->clientSocket = clientSocket;
 		
 		// set up the thread
