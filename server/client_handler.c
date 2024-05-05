@@ -27,7 +27,7 @@ void* talk_to_client(void *_args)
 	while(1)
 	{
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
-		printf("====== NEW CASE ======");
+		printf("\n====== NEW CASE ======\n");
 		
 		// set the ptr to the (null) head
 		ptr = args->chatroomList;
