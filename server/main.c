@@ -4,7 +4,7 @@
 #include "main.h"
 
 // mutex
-extern pthread_mutex_t clients_mutex;
+pthread_mutex_t clients_mutex;
 
 /* ************************************************************************* */
 /* MAIN                                                                      */
