@@ -49,9 +49,12 @@ void* talk_to_client(void *_args)
 		
 			// read the sender name
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
-
+		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
 		printf("\n\n\n====== NEW CASE ======\n");
+
+		// lock mutex
+		pthread_mutex_lock(&clients_mutex);
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(identifier)
@@ -206,6 +209,8 @@ void* talk_to_client(void *_args)
 				}
 				// end of this case
 			// end of the switch statement
+			// lock mutex
+			pthread_mutex_unlock(&clients_mutex);
 		}
 	}
 	// this will never be reached
