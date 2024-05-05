@@ -40,10 +40,10 @@ void* talk_to_client(void *_args)
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
 		// DEBUG CHECK IF READING
-		printf("IDENTIFER: %s\n", identifier);
+		printf("IDENTIFER: %i\n", identifier);
 		printf("MESSAGE: %s\n", message);
 		printf("CHATNODEIP: %s\n", chatNodeip);
-		printf("CHATNODEPORT: %s\n", chatNodePort);
+		printf("CHATNODEPORT: %i\n", chatNodePort);
 		printf("CHATNODENAME: %s\n", chatNodeName);
 		
 		// determine what identifier was sent in the message and start switch statement
