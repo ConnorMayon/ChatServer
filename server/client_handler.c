@@ -12,7 +12,6 @@ void* talk_to_client(void *_args)
 	char chatNodeip[15];
 	int chatNodePort;
 	char chatNodeName[16];
-	int senderThread;
 	Message* outputMessage;
 	struct args* args = (struct args*) _args;
 
