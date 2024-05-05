@@ -25,10 +25,7 @@ void* talk_to_client(void *_args)
 	
 	// while the client is connected
 	while(1)
-	{
-		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
-		printf("\n====== NEW CASE ======\n");
-		
+	{	
 		// set the ptr to the (null) head
 		ptr = args->chatroomList;
 		
@@ -47,6 +44,9 @@ void* talk_to_client(void *_args)
 		
 			// read the sender name
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
+
+		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
+		printf("\n\n\n====== NEW CASE ======\n");
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(identifier)
