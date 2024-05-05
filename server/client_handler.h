@@ -31,9 +31,6 @@
 // function declarations
 void* talk_to_client(void *_args);
 
-// mutex
-extern pthread_mutex_t clients_mutex;
-
 // struct
 struct args
 {
