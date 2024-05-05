@@ -16,6 +16,7 @@ void *runReceiving()
         // while connected to a server
         while(clientConnected)
             {
+            printf("Waiting for recieve!\n");
             // reads server output
             receive_message_from_server(clientSocket, receiveMessage);
 	    ChatNode thisNode = receiveMessage->chat_node;
@@ -23,7 +24,7 @@ void *runReceiving()
             switch(receiveMessage->message_type)
                 {
                 // translate control code
-                case 'J':
+                case JOIN:
                 // if code is J
                     // print JOIN
                     printf(JOINED_COLOR);
@@ -31,7 +32,7 @@ void *runReceiving()
 		    printf(RESET_COLOR);
 		    printf("\n");
                 break;
-                case 'L':
+                case LEAVE:
                 // if code is L
                     // print LEAVE
                     printf(LEFT_COLOR);
@@ -39,7 +40,7 @@ void *runReceiving()
 		    printf(RESET_COLOR);
 		    printf("\n");
                 break;
-                case 'N':
+                case NOTE:
                 // if code is N
                     // print message
                     printf(NOTE_COLOR);
@@ -48,7 +49,7 @@ void *runReceiving()
 		    printf(RESET_COLOR);
 		    printf("\n");
                 break;
-                case 'S':
+                case SHUTDOWN_ALL:
                 // if code is S
                     // print message
                     printf("Shutting down");

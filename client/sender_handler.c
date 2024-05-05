@@ -10,7 +10,9 @@ void *runSending(void *_args)
     while(true)
         {
         // continuously reads client input
+        printf("Waiting for input!\n");
         fgets(input, sizeof(input), stdin);
+        printf("--input: %s", input);
         pthread_mutex_lock(&mutex);
         // translantes client input into control code
         if(strcmp(input, "LEAVE\n") == 0)
