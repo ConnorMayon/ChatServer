@@ -113,7 +113,7 @@ void* talk_to_client(void *_args)
 				printf("PASSED THE NULL HEAD ON PTR\n");
 
 				// determine sender
-				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0 && ptr = ptr->next_node != NULL)
+				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0 && ptr->chat_node != NULL)
 				{
 					// DEBUG: CHECK PTR LOG_NAME AND CHATNODENAME
 					printf("ptr->chat_node->log_name: %s, chatNodeName: %s.\n", ptr->chat_node->log_name, chatNodeName);
