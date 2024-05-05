@@ -58,7 +58,7 @@ void* talk_to_client(void *_args)
 				sprintf(buffOut, "%s has joined the chat!\n", chatNodeName);
 				
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
-				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
+				printf("CASE: JOIN");
 			
 				// send the join message to the chatroom for the requesting client
 				while(ptr->next_node != NULL)
@@ -69,9 +69,6 @@ void* talk_to_client(void *_args)
 					// write to the current chat node
 					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 				}
-				
-				// DEBUG: CHECK IF MAKES IT PASSED SENDING TO ALL CLIENTS
-				printf("PASSED SENDING JOIN MESSAGE TO ALL CLIENTS\n");
 			
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
