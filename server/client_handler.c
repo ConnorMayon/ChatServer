@@ -129,7 +129,7 @@ void* talk_to_client(void *_args)
 				pthread_detach(pthread_self());
 				
 				// DEBUG: CHECK IF PASSED THE THREAD BEING DROPPED
-				printf("PASSED THE THREAD BEING DROPPED");
+				printf("PASSED THE THREAD BEING DROPPED\n");
 				
 				// end of this case
 				break;
