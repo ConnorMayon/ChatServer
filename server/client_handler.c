@@ -110,6 +110,7 @@ void* talk_to_client(void *_args)
 				// DEBUG: TEST THE LINKED LIST CHAT NODE
 				printf("---TESTING LINKED LIST---\n");
 				ptr = args->chatroomList;
+				printf("ptr->chat_node = %i\n", ptr->chat_node);
 				while(ptr->chat_node != NULL)
 				{
 					printf("IP: %s,  ", ptr->chat_node->ip);
