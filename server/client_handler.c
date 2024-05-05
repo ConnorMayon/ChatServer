@@ -93,7 +93,6 @@ void* talk_to_client(void *_args)
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
 				
-				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
 				printf("PASSED MAKING CHAT NODE\n");
 				
@@ -102,6 +101,20 @@ void* talk_to_client(void *_args)
 				
 					// otherwise set the new node as the last bounds
 				else args->bounds->last_node = newNode;
+
+				// DEBUG: TEST THE LINKED LIST CHAT NODE
+				printf("---TESTING LINKED LIST---");
+				wrkptr = ptr;
+				while(wrkptr->chat_node != NULL)
+				{
+					printf("IP: %s,  ", wrkptr->chat_node->ip);
+					printf("PORT: %d,  ", wrkptr->chat_node->port_num);
+					printf("NAME: %s,  ", wrkptr->chat_node->log_name);
+					printf("THREAD: %d\n", wrkptr->chat_node->thread_num);
+					
+					// go to the next chat node
+					wrkptr = wrkptr->next_node;
+				}
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
 				printf("PASSED SETTING CHAT NODE BOUNDS\n");
