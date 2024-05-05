@@ -83,15 +83,16 @@ void* talk_to_client(void *_args)
 				
 					// add the new node's thread number manually
 				newNode->thread_num = args->clientSocket;
+
+				// DEBUG: PRINT THE NEW CHAT NODE
+				printf("IP: %s,  ", newNode->ip);
+				printf("PORT: %d,  ", newNode->port_num);
+				printf("NAME: %s,  ", newNode->log_name);
+				printf("THREAD: %d\n", newNode->thread_num);
 				
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
 				
-				// DEBUG: CHECK THE CHAT NODE
-				printf("IP: %s,  ", ptr->chat_node->ip);
-				printf("PORT: %d,  ", ptr->chat_node->port_num);
-				printf("NAME: %s,  ", ptr->chat_node->log_name);
-				printf("THREAD: %d\n", ptr->chat_node->thread_num);
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
 				printf("PASSED MAKING CHAT NODE\n");
