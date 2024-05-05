@@ -26,6 +26,8 @@ void* talk_to_client(void *_args)
 	// while the client is connected
 	while(1)
 	{
+		
+		// set the ptr
 		ptr = args->chatroomList;
 		
 		// read the message sent from the client in the stages sent
@@ -51,7 +53,7 @@ void* talk_to_client(void *_args)
 			case JOIN:
 			
 				// form the join message that will be sent to the chatroom
-				sprintf(buffOut, "%s has joined the chat\n", chatNodeName);
+				sprintf(buffOut, "%s has joined the chat!\n", chatNodeName);
 				
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
 				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
