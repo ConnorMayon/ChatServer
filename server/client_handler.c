@@ -51,7 +51,7 @@ void* talk_to_client(void *_args)
 			case JOIN:
 			
 				// form the join message that will be sent to the chatroom
-				sprintf(buffOut, "%s has joined\n", chatNodeName);
+				sprintf(buffOut, "%s has joined the chat\n", chatNodeName);
 				
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
 				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
