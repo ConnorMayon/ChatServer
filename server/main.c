@@ -17,6 +17,7 @@ int main()
 	pthread_t thread;
 	int yes = 1;
 	struct args* args = malloc(sizeof(struct args));	// initalize the args struct
+	pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
 	
 	// create chat node list
 	ChatNodeLL *chatroomList = (ChatNodeLL*)malloc(sizeof(ChatNodeLL));
@@ -70,8 +71,10 @@ int main()
 	// set the needed values into the args struct
 	args->chatroomList = chatroomList;
 	args->bounds = bounds;
-
-
+	
+	// mutex lock
+	pthread_mutex_lock(&clients_mutex);
+	
 	// infinite loop for server
 	while(true)
 	{
@@ -83,6 +86,7 @@ int main()
 		// handle the client
 		pthread_create(&thread, NULL, talk_to_client, args);
 	}
+	pthread_mutex_unlock(&clients_mutex);
 	
 	return EXIT_SUCCESS;
 }
