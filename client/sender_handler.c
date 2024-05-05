@@ -5,6 +5,7 @@ void *runSending(void *_args)
     {
     struct conn_args *args = (struct conn_args *) _args;
     char input[1000];
+    char blankString[64] = {'\0'};
     Message* sendMessage;
 
     while(true)
@@ -22,7 +23,7 @@ void *runSending(void *_args)
                 {
                 // if client is connected
                     // set code to L set message to empty
-                    sendMessage = create_message(LEAVE, "", args->chatNode);
+                    sendMessage = create_message(LEAVE, blankString, args->chatNode);
                     // send to server
                     send_message_to_server(clientSocket, sendMessage);
 
@@ -45,7 +46,7 @@ void *runSending(void *_args)
                 {
                 // if client is not connected
                     // set code to J set message to empty
-                    sendMessage = create_message(JOIN, "", args->chatNode);
+                    sendMessage = create_message(JOIN, blankString, args->chatNode);
 
                     // connect to server
                     if(!makeConnection(args->serverAdd, args->serverPort)) exit(EXIT_FAILURE);
@@ -70,7 +71,7 @@ void *runSending(void *_args)
                 {
                 // if client is connected
                     // set code to L set message to empty
-                    sendMessage = create_message(LEAVE, "", args->chatNode);
+                    sendMessage = create_message(LEAVE, blankString, args->chatNode);
                     // send to server
                     send_message_to_server(clientSocket, sendMessage);
 
@@ -89,7 +90,7 @@ void *runSending(void *_args)
                 {
                 // if client is connected
                     // set code to S set message to empty
-                    sendMessage = create_message(SHUTDOWN_ALL, "", args->chatNode);
+                    sendMessage = create_message(SHUTDOWN_ALL, blankString, args->chatNode);
                     // send to server
                     send_message_to_server(clientSocket, sendMessage);
 
