@@ -26,6 +26,7 @@ void *runSending(void *_args)
                     // end connection to client
                     args->connected = false;
                     free(sendMessage);
+                    close(clientSocket);
                 }
                 else
                 {

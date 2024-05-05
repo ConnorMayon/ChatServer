@@ -1,88 +1,72 @@
-// header files
-#include <stdio.h>
-#include <stdlib.h>
 #include "main.h"
 
-/* ************************************************************************* */
-/* MAIN                                                                      */
-/* ************************************************************************* */
-int main()
-{
-	// initialize varaibles
-	int serverSocket;			// descriptor of server socket
-	int clientSocket;			// descriptor of the client socket
-	struct sockaddr_in serverAddress; // for naming the server's listening socket
-	char* properties_file = "PROPERTIES.properties";
-	Properties* properties;
-	pthread_t thread;
-	int yes = 1;
-	struct args* args = malloc(sizeof(struct args));	// initalize the args struct
-	
-	// create chat node list
-	ChatNodeLL *chatroomList = (ChatNodeLL*)malloc(sizeof(ChatNodeLL));
-	
-	// create chat node bounds
-	ChatNodeBounds* bounds = create_chat_node_bounds();
+/************************************************************************
+ * MAIN
+ ************************************************************************/
+bool clientActive;
+bool clientConnected;
+int clientSocket;
 
-	// read properties
-	properties = property_read_properties(properties_file);
+int main(int argc, char *argv[]) {            
+    char temp[50];
+    int userPort;
+    char userAdd[15];
+    char userName[16];
+ 
+    // create an unnamed socket, and then name it
+    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
-	// ignore SIGPIPE, sent when client disconnected
-	signal(SIGPIPE, SIG_IGN);
+    // set conn_args
+    struct conn_args *args = malloc (sizeof (struct conn_args));
+    args->connected = false;
+    args->active = true;
 
-	// create unnamed network socket for server to listen on
-	if ((serverSocket = socket(AF_INET, SOCK_STREAM, 0)) == -1)
-	{
-		perror("Error creating socket");
-		exit(EXIT_FAILURE);
-	}
-	
-	// lose the pesky "Address already in use" error message
-	if (setsockopt(serverSocket, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof(yes)) == -1) 
-	{
-		perror("setsockopt");
-		exit(EXIT_FAILURE);
-	}
-	
-	// bind the socket
-	serverAddress.sin_family = AF_INET;
-	serverAddress.sin_addr.s_addr = inet_addr(SERVER_ADDR);
-	serverAddress.sin_port = htons(PORT);
+    clientActive = args->active;
+    clientConnected = args->connected;
 
-	// binding unnamed socket to a particular port
-	if (bind(serverSocket, (struct sockaddr *)&serverAddress, sizeof(serverAddress)) != 0) 
-	{
-		perror("Error binding socket");
-		exit(EXIT_FAILURE);
-	}
+    // read properties
+    char* paramFile = argv[1];
 
-	// listen on the socket
-	if (listen(serverSocket, 10) != 0)
-	{
-		perror("Error listening on socket");
-		exit(EXIT_FAILURE);
-	}
-	
-	// have the server print that it's ready
-	printf("Ready for Connections\n");
+    FILE* file;
+    file = fopen( paramFile, "r" );
 
-	
-	// set the needed values into the args struct
-	args->chatroomList = chatroomList;
-	args->bounds = bounds;
+    if(file != NULL)
+        {
+        fscanf(file, "%s %s %d", temp, temp, &args->serverPort);
+        fscanf(file, "%s %s %s", temp, temp, args->serverAdd);
+        fscanf(file, "%s %s %s", temp, temp, userName);
+        fscanf(file, "%s %s %d", temp, temp, &userPort);
+        fscanf(file, "%s %s %s", temp, temp, userAdd);
+        
+        printf("You are ready to go!\n");
+
+        args->chatNode = create_chat_node(userAdd, userPort, userName);
+        
+        // thread
+        pthread_t thread[THREAD_COUNT];
+        if(pthread_create(&thread[0], NULL, runSending, args))
+        {
+            printf("Error creating sending thread");
+        }
+
+        if(pthread_create(&thread[1], NULL, runReceiving, args))
+        {
+            printf("Error creating receiving thread");        
+        }
 
 
-	// infinite loop for server
-	while(true)
-	{
-		clientSocket = accept(serverSocket, NULL, NULL);
-		printf("\nServer with PID %d: accepted client\n", getpid());
-		
-		args->clientSocket = clientSocket;
+        //finish threads
+        pthread_join(thread[0], NULL);
+        pthread_join(thread[1], NULL);
 
-		// handle the client
-		pthread_create(&thread, NULL, talk_to_client, args);
-	}
-	
-	return EXIT_SUCCESS;
+	fclose(file);
+        close(clientSocket);
+        free(args);
+        printf("\n");
+        }
+    else
+    	{
+    	printf("Cannot find properties file");
+    	}
+    return EXIT_SUCCESS;
 }
