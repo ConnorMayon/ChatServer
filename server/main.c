@@ -3,6 +3,9 @@
 #include <stdlib.h>
 #include "main.h"
 
+// mutex
+pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
+
 /* ************************************************************************* */
 /* MAIN                                                                      */
 /* ************************************************************************* */
@@ -17,7 +20,6 @@ int main()
 	pthread_t thread;
 	int yes = 1;
 	struct args* args = malloc(sizeof(struct args));	// initalize the args struct
-	pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
 	
 	// create chat node list
 	ChatNodeLL *chatroomList = (ChatNodeLL*)malloc(sizeof(ChatNodeLL));
