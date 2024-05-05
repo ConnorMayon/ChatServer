@@ -85,7 +85,7 @@ void* talk_to_client(void *_args)
 				newNode->thread_num = args->clientSocket;
 				
 					// add the new clinet to the chat node list
-				add_chat_node(args->chatroomList, newNode);
+				add_chat_node(ptr, newNode);
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
 				printf("PASSED MAKING CHAT NODE\n");
@@ -98,6 +98,13 @@ void* talk_to_client(void *_args)
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
 				printf("PASSED SETTING CHAT NODE BOUNDS\n");
+
+				// DEBUG LOOP: CHECK THE CHAT NODES
+				for(int i = 0; i < 5; i++)
+				{
+					Printf("---PRINTING CHAT NODE LIST---\n");
+					printf("NODE: %d,  IP: %s,  PORT: %d,  NAME: %s,  THREAD: %d\n", i, ptr->ip, ptr->port_num, ptr->log_name, ptr->thread_num);
+				}
 				
 				// end of this case
 				break;				
