@@ -11,6 +11,7 @@ typedef struct chatNodeStruct {
     char ip[15];
     int port_num;
     char log_name[16];
+    int thread_num
 } ChatNode;
 
 struct ChatNodeLL {
