@@ -1,7 +1,7 @@
 #include "chat_node.h"
 
 void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node) {
-    ChatNodeLL temp_node = chat_node_ll;
+    ChatNodeLL* temp_node = chat_node_ll;
     // Iterate through each chat node in linked list until the next node is NULL
     while(temp_node->next_node != NULL) temp_node = temp_node->next_node;
 
