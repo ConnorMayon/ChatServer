@@ -65,7 +65,7 @@ void* talk_to_client(void *_args)
 				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
 			
 				// send the join message to the chatroom for the requesting client
-				while(wrkptr->chat_node != NULL)
+				while(wrkptr->next_node != NULL)
 				{
 					// write to the current chat node
 					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
@@ -110,8 +110,7 @@ void* talk_to_client(void *_args)
 				// DEBUG: TEST THE LINKED LIST CHAT NODE
 				printf("---TESTING LINKED LIST---\n");
 				ptr = args->chatroomList;
-				printf("ptr->chat_node = %i\n", ptr->chat_node);
-				while(ptr->chat_node != NULL)
+				while(ptr->next_node != NULL)
 				{
 					printf("IP: %s,  ", ptr->chat_node->ip);
 					printf("PORT: %d,  ", ptr->chat_node->port_num);
@@ -146,7 +145,7 @@ void* talk_to_client(void *_args)
 				sprintf(buffOut, "%s has left\n", chatNodeName);
 				
 				// send the leave message to the entire chatroom
-				while(wrkptr->chat_node != NULL)
+				while(wrkptr->next_node != NULL)
 				{
 					write(wrkptr->chat_node->thread_num, &identifier, sizeof(identifier));
 					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
@@ -170,7 +169,7 @@ void* talk_to_client(void *_args)
 			
 				// send all connected clients the shutdown code
 				sprintf(buffOut, "L\n");
-				while(wrkptr->chat_node != NULL)
+				while(wrkptr->next_node != NULL)
 				{
 					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 					wrkptr = wrkptr->next_node;
@@ -185,7 +184,7 @@ void* talk_to_client(void *_args)
 				printf("IDENTIFIER READ: NOTE\n");
 				wrkptr = ptr;
 				// send the message to everyone but the sender
-				while(wrkptr->chat_node != NULL)
+				while(wrkptr->next_node != NULL)
 				{
 					// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
 					printf("WHILE LOOP ENTERED\n");
