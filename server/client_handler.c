@@ -61,9 +61,6 @@ void* talk_to_client(void *_args)
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
 				printf("CASE: JOIN");
 
-				// lock mutex
-				pthread_mutex_lock(&clients_mutex);
-				
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
 				ChatNode* newNode = create_chat_node(chatNodeip, chatNodePort, chatNodeName);
@@ -96,8 +93,6 @@ void* talk_to_client(void *_args)
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
-				// lock mutex
-				pthread_mutex_unlock(&clients_mutex);
 				
 				// end of this case
 				break;				
@@ -106,9 +101,6 @@ void* talk_to_client(void *_args)
 			case LEAVE:
 				// DEBUG: CHECK IF FINDING CASE
 				printf("CASE: LEAVE\n");
-				
-				// lock mutex
-				pthread_mutex_lock(&clients_mutex);
 				
 				// move past the null head
 				ptr = ptr->next_node;
@@ -145,9 +137,6 @@ void* talk_to_client(void *_args)
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
 				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
-
-				// lock mutex
-				pthread_mutex_unlock(&clients_mutex);
 				
 				// close the thread between the sender and server
 				close(args->clientSocket);
@@ -157,9 +146,6 @@ void* talk_to_client(void *_args)
 			case SHUTDOWN_ALL:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				printf("CASE: SHUTDOWN ALL\n");
-				
-				// lock mutex
-				pthread_mutex_lock(&clients_mutex);
 				
 				// determine sender
 				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
@@ -183,9 +169,6 @@ void* talk_to_client(void *_args)
 					// write the message to the current chat node
 					send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 				}
-
-				// lock mutex
-				pthread_mutex_unlock(&clients_mutex);
 				
 				// shutdown the server
 				exit(EXIT_SUCCESS);
@@ -194,9 +177,6 @@ void* talk_to_client(void *_args)
 			case NOTE:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				printf("CASE: NOTE\n");
-
-				// lock mutex
-				pthread_mutex_lock(&clients_mutex);
 				
 				// move past the null head
 				ptr = ptr->next_node;
@@ -227,8 +207,6 @@ void* talk_to_client(void *_args)
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
-				// lock mutex
-				pthread_mutex_unlock(&clients_mutex);
 				
 				// end of this case
 			// end of the switch statement
