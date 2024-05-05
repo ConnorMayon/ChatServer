@@ -1,4 +1,4 @@
-// header files
+A// header files
 #include "client_handler.h"
 
 // constants
@@ -148,17 +148,13 @@ void* talk_to_client(void *_args)
 				{
 					ptr = ptr->next_node;
 					
-					// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
-					printf("WHILE LOOP ENTERED\n");
-					
 					// make sure the current node isn't the sender
 					if(ptr->chat_node->log_name != chatNodeName)
 					{
 						// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
-						printf("IF STATEMENT ENTERED\n");
 						printf("WRITING TO THREAD: %d\n", ptr->chat_node->thread_num);
-						printf("WRITING TO THREAD: %s\n", message);
-						printf("WRITING TO THREAD: %s\n", chatNodeName);
+						printf("MESSAGE: %s\n", message);
+						printf("CHAT NODE NAME: %s\n", chatNodeName);
 						
 						// write the indentifier
 						write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
