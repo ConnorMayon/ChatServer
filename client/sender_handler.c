@@ -4,16 +4,16 @@
 void *runSending(void *_args)
     {
     struct conn_args *args = (struct conn_args *) _args;
-    char input[1000];
+    char input[64];
     char blankString[64] = {'\0'};
     Message* sendMessage;
 
     while(true)
         {
         // continuously reads client input
+        input[0] = '\0';
         fgets(input, sizeof(input), stdin);
         printf("--input: %s", input);
-        pthread_mutex_lock(&mutex);
         // translantes client input into control code
         if(strcmp(input, "LEAVE\n") == 0)
             {
@@ -122,9 +122,6 @@ void *runSending(void *_args)
                 printf("\nCOMMAND NOT RECOGNIZED: type JOIN to join chat and send messages\n");
                 }
             }
-
-
-        pthread_mutex_unlock(&mutex);
         
         }
     return NULL;
