@@ -108,10 +108,13 @@ void *runSending(void *_args)
                 if(clientConnected)
                 {
                 // if client is connected
+                    printf("Sending");
                     // set code to N set message to user input
                     sendMessage = create_message(NOTE, input, args->chatNode);
+                    printf("After creating");
                     // send to server
                     send_message_to_server(clientSocket, sendMessage);
+                    printf("After sending");
 
                     free(sendMessage);
                 }

@@ -19,7 +19,6 @@ void *runReceiving()
             // reads server output
             receive_message_from_server(clientSocket, receiveMessage);
 	    ChatNode thisNode = receiveMessage->chat_node;
-	    printf("%s", thisNode.log_name);
             switch(receiveMessage->message_type)
                 {
                 // translate control code
