@@ -186,50 +186,31 @@ void* talk_to_client(void *_args)
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
-				// DEBUG: CHECK IF SENDER FOUND
-				printf("SENDER HAS BEEN FOUND\n");
 				
 				// form the message struct so we can send the note to all the other clients before shutting down
 				outputMessage = create_message(NOTE, message, ptr->chat_node);
 
-				// DEBUG: CHECK IF CREATING MESSAGE
-				printf("MESSAGE STRUCT CREATED\n");
-
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
 
-				// DEBUG: CHECK IF PTR SET BACK TO HEAD
-				printf("PTR SET BACK TO HEAD\n");
-				
 				// send the message to everyone but the sender
 				while(ptr->next_node != NULL)
 				{
-					// DEBUG: CHECK IF CORRECTLY GOT INSIDE THE WHILE LOOP
-					printf("INSIDE THE WHILE LOOP\n");
-					
 					// move to the next node
 					ptr = ptr->next_node;
 					
 					// make sure the current node isn't the sender
 					if(strcmp(ptr->chat_node->log_name, chatNodeName) != 0)
 					{
-						// DEBUG: CHECK IF THE IF STATEMENT IS ENTERED
-						printf("IF STATEMENT ENTERED\n");
-						//printf("WRITING TO THREAD: %d\n", ptr->chat_node->thread_num);
-						//printf("MESSAGE: %s\n", message);
-						//printf("CHAT NODE NAME: %s\n", chatNodeName);
-						
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
-				// DEBUG: CHECK IF PASSED THE SENDING OF THE NOTE TO ALL CLIENTS
-				printf("PASSED THE SENDING OF THE NOTE TO ALL CLIENTS\n");
 				// end of this case
-		// end of the switch statement
+			// end of the switch statement
 		}
 	}
-	
+	// this will never be reached
 	//return NULL;
 // end of function
 }
