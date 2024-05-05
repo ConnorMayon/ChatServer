@@ -113,7 +113,7 @@ void* talk_to_client(void *_args)
 				printf("PASSED THE NULL HEAD ON PTR\n");
 
 				// determine sender
-				while(ptr->chat_node->log_name != chatNodeName)
+				while(strcmp(ptr->chat_node->log_name, chatNodeName) == 0)
 				{
 					// DEBUG: CHECK PTR LOG_NAME AND CHATNODENAME
 					printf("ptr->chat_node->log_name: %s, chatNodeName: %s\n", ptr->chat_node->log_name, chatNodeName);
@@ -161,7 +161,7 @@ void* talk_to_client(void *_args)
 			// if the SHUTDOWN ALL identifier was sent
 			case SHUTDOWN_ALL:
 				// determine sender
-				while(ptr->chat_node->log_name != chatNodeName)
+				while(strcmp(ptr->chat_node->log_name, chatNodeName) == 0)
 				{
 					// go to the next chat node
 					ptr = ptr->next_node;
