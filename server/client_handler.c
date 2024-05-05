@@ -113,10 +113,10 @@ void* talk_to_client(void *_args)
 				printf("PASSED THE NULL HEAD ON PTR\n");
 
 				// determine sender
-				while(strcmp(ptr->chat_node->log_name, chatNodeName) == 0)
+				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0 && ptr = ptr->next_node != NULL)
 				{
 					// DEBUG: CHECK PTR LOG_NAME AND CHATNODENAME
-					printf("ptr->chat_node->log_name: %s, chatNodeName: %s\n", ptr->chat_node->log_name, chatNodeName);
+					printf("ptr->chat_node->log_name: %s, chatNodeName: %s.\n", ptr->chat_node->log_name, chatNodeName);
 					
 					// DEBUG: MOVING TO NEXT NODE
 					printf("MOVING TO NEXT NODE\n");
@@ -161,7 +161,7 @@ void* talk_to_client(void *_args)
 			// if the SHUTDOWN ALL identifier was sent
 			case SHUTDOWN_ALL:
 				// determine sender
-				while(strcmp(ptr->chat_node->log_name, chatNodeName) == 0)
+				while(strcmp(ptr->chat_node->log_name, chatNodeName) != 0 && ptr = ptr->next_node != NULL)
 				{
 					// go to the next chat node
 					ptr = ptr->next_node;
@@ -196,7 +196,7 @@ void* talk_to_client(void *_args)
 					ptr = ptr->next_node;
 					
 					// make sure the current node isn't the sender
-					if(strcmp(ptr->chat_node->log_name, chatNodeName) == 0)
+					if(strcmp(ptr->chat_node->log_name, chatNodeName) != 0 && ptr = ptr->next_node != NULL)
 					{
 						// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
 						printf("WRITING TO THREAD: %d\n", ptr->chat_node->thread_num);
