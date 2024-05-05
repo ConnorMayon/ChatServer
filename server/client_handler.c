@@ -93,7 +93,7 @@ void* talk_to_client(void *_args)
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
 
-				ChatNodeLL t_node = ptr;
+				ChatNodeLL *t_node = ptr;
 				while (t_node->next_node != NULL) t_node = t_node->next_node;
 				printf("Chat node: %i\n\n", t_node->chat_node);
 				
