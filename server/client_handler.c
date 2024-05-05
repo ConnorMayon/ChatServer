@@ -112,13 +112,13 @@ void* talk_to_client(void *_args)
 				ptr = args->chatroomList;
 				while(ptr->next_node != NULL)
 				{
+					// go to the next chat node
+					ptr = ptr->next_node;
+					
 					printf("IP: %s,  ", ptr->chat_node->ip);
 					printf("PORT: %d,  ", ptr->chat_node->port_num);
 					printf("NAME: %s,  ", ptr->chat_node->log_name);
 					printf("THREAD: %d\n", ptr->chat_node->thread_num);
-					
-					// go to the next chat node
-					ptr = ptr->next_node;
 				}
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
