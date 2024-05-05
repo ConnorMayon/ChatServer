@@ -26,7 +26,7 @@ void* talk_to_client(void *_args)
 	// while the client is connected
 	while(1)
 	{
-		ChatNodeLL *wrkptr = ptr;
+		ptr = args->chatroomList;
 		
 		// read the message sent from the client in the stages sent
 			// read the identifier
@@ -65,16 +65,14 @@ void* talk_to_client(void *_args)
 				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
 			
 				// send the join message to the chatroom for the requesting client
-				/*
-				while(wrkptr->next_node != NULL)
+				while(ptr->next_node != NULL)
 				{
+    					// go to the next chat node
+					ptr = ptr->next_node;
+     
 					// write to the current chat node
-					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
-					
-					// go to the next chat node
-					wrkptr = wrkptr->next_node;
+					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 				}
-				*/
 				
 				// DEBUG: CHECK IF MAKES IT PASSED SENDING TO ALL CLIENTS
 				printf("PASSED SENDING JOIN MESSAGE TO ALL CLIENTS\n");
@@ -94,9 +92,8 @@ void* talk_to_client(void *_args)
 				
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
-
-				ChatNodeLL *t_node = wrkptr;
-				//while (t_node->next_node != NULL) t_node = t_node->next_node;
+				
+				
 				printf("Chat node: %i\n\n", t_node->chat_node);
 				
 				
@@ -147,11 +144,11 @@ void* talk_to_client(void *_args)
 				sprintf(buffOut, "%s has left\n", chatNodeName);
 				
 				// send the leave message to the entire chatroom
-				while(wrkptr->next_node != NULL)
+				while(ptr->next_node != NULL)
 				{
-					write(wrkptr->chat_node->thread_num, &identifier, sizeof(identifier));
-					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
-					wrkptr = wrkptr->next_node;
+					ptr = ptr->next_node;
+					write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
+					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 				}
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
@@ -171,10 +168,10 @@ void* talk_to_client(void *_args)
 			
 				// send all connected clients the shutdown code
 				sprintf(buffOut, "L\n");
-				while(wrkptr->next_node != NULL)
+				while(ptr->next_node != NULL)
 				{
-					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
-					wrkptr = wrkptr->next_node;
+					ptr = ptr->next_node;
+					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 				}
 				
 				// shutdown the server
@@ -184,32 +181,32 @@ void* talk_to_client(void *_args)
 			case NOTE:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				printf("IDENTIFIER READ: NOTE\n");
-				wrkptr = ptr;
 				// send the message to everyone but the sender
-				while(wrkptr->next_node != NULL)
+				while(ptr->next_node != NULL)
 				{
+					ptr = ptr->next_node;
+					
 					// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
 					printf("WHILE LOOP ENTERED\n");
 					
 					// make sure the current node isn't the sender
-					if(wrkptr->chat_node->log_name != chatNodeName)
+					if(ptr->chat_node->log_name != chatNodeName)
 					{
 						// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
 						printf("IF STATEMENT ENTERED\n");
-						printf("WRITING TO THREAD: %d\n", wrkptr->chat_node->thread_num);
+						printf("WRITING TO THREAD: %d\n", ptr->chat_node->thread_num);
 						printf("WRITING TO THREAD: %s\n", message);
 						printf("WRITING TO THREAD: %s\n", chatNodeName);
 						
 						// write the indentifier
-						write(wrkptr->chat_node->thread_num, &identifier, sizeof(identifier));
+						write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
 						
 						// write the message
-						write(wrkptr->chat_node->thread_num, &message, sizeof(message));
+						write(ptr->chat_node->thread_num, &message, sizeof(message));
 						
 						// write the sender
-						write(wrkptr->chat_node->thread_num, &chatNodeName, sizeof(chatNodeName));
+						write(ptr->chat_node->thread_num, &chatNodeName, sizeof(chatNodeName));
 					}
-					wrkptr = wrkptr->next_node;
 				}
 				// DEBUG: CHECK IF PASSED THE SENDING OF THE NOTE TO ALL CLIENTS
 				printf("PASSED THE SENDING OF THE NOTE TO ALL CLIENTS\n");
