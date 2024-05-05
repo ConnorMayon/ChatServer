@@ -3,9 +3,6 @@
 #include <stdlib.h>
 #include "main.h"
 
-// mutex
-pthread_mutex_t clients_mutex = PTHREAD_MUTEX_INITIALIZER;
-
 /* ************************************************************************* */
 /* MAIN                                                                      */
 /* ************************************************************************* */
