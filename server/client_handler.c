@@ -40,7 +40,7 @@ void* talk_to_client(void *_args)
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
 		// DEBUG CHECK IF READING
-		printf("=========NEW CASE=========\n");
+		printf("\n\n=========NEW CASE=========\n");
 		printf("IDENTIFER: %i\n", identifier);
 		printf("MESSAGE: %s\n", message);
 		printf("CHATNODEIP: %s\n", chatNodeip);
