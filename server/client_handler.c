@@ -26,6 +26,8 @@ void* talk_to_client(void *_args)
 	// while the client is connected
 	while(1)
 	{
+		ChatNodeLL *wrkptr = *ptr;
+		
 		// read the message sent from the client in the stages sent
 			// read the identifier
 		read(args->clientSocket, &identifier, sizeof(identifier));
@@ -63,13 +65,13 @@ void* talk_to_client(void *_args)
 				printf("CASE: JOIN, JOIN MESSAGE TO BE SENT: %s\n", buffOut);
 			
 				// send the join message to the chatroom for the requesting client
-				while(ptr->chat_node != NULL)
+				while(wrkptr->chat_node != NULL)
 				{
 					// write to the current chat node
-					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
+					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 					
 					// go to the next chat node
-					ptr = ptr->next_node;
+					wrkptr = wrkptr->next_node;
 				}
 				
 				// DEBUG: CHECK IF MAKES IT PASSED SENDING TO ALL CLIENTS
@@ -118,11 +120,11 @@ void* talk_to_client(void *_args)
 				sprintf(buffOut, "%s has left\n", chatNodeName);
 				
 				// send the leave message to the entire chatroom
-				while(ptr->chat_node != NULL)
+				while(wrkptr->chat_node != NULL)
 				{
-					write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
-					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
-					ptr = ptr->next_node;
+					write(wrkptr->chat_node->thread_num, &identifier, sizeof(identifier));
+					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
+					wrkptr = wrkptr->next_node;
 				}
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
@@ -142,10 +144,10 @@ void* talk_to_client(void *_args)
 			
 				// send all connected clients the shutdown code
 				sprintf(buffOut, "L\n");
-				while(ptr->chat_node != NULL)
+				while(wrkptr->chat_node != NULL)
 				{
-					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
-					ptr = ptr->next_node;
+					write(wrkptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
+					wrkptr = wrkptr->next_node;
 				}
 				
 				// shutdown the server
@@ -157,30 +159,30 @@ void* talk_to_client(void *_args)
 				printf("IDENTIFIER READ: NOTE\n");
 				
 				// send the message to everyone but the sender
-				while(ptr->chat_node != NULL)
+				while(wrkptr->chat_node != NULL)
 				{
 					// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
 					printf("WHILE LOOP ENTERED\n");
 					
 					// make sure the current node isn't the sender
-					if(ptr->chat_node->log_name != chatNodeName)
+					if(wrkptr->chat_node->log_name != chatNodeName)
 					{
 						// DEBUG: CHECK IF WHILE LOOP IS BEING HIT
 						printf("IF STATEMENT ENTERED\n");
-						printf("WRITING TO THREAD: %d\n", thread_num);
+						printf("WRITING TO THREAD: %d\n", wrkptr->chat_node->thread_num);
 						printf("WRITING TO THREAD: %s\n", message);
 						printf("WRITING TO THREAD: %s\n", chatNodeName);
 						
 						// write the indentifier
-						write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
+						write(wrkptr->chat_node->thread_num, &identifier, sizeof(identifier));
 						
 						// write the message
-						write(ptr->chat_node->thread_num, &message, sizeof(message));
+						write(wrkptr->chat_node->thread_num, &message, sizeof(message));
 						
 						// write the sender
-						write(ptr->chat_node->thread_num, &chatNodeName, sizeof(chatNodeName));
+						write(wrkptr->chat_node->thread_num, &chatNodeName, sizeof(chatNodeName));
 					}
-					ptr = ptr->next_node;
+					wrkptr = wrkptr->next_node;
 				}
 				// DEBUG: CHECK IF PASSED THE SENDING OF THE NOTE TO ALL CLIENTS
 				printf("PASSED THE SENDING OF THE NOTE TO ALL CLIENTS\n");
