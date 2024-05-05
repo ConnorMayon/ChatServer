@@ -102,7 +102,7 @@ void* talk_to_client(void *_args)
 				// DEBUG LOOP: CHECK THE CHAT NODES
 				for(int i = 0; i < 5; i++)
 				{
-					Printf("---PRINTING CHAT NODE LIST---\n");
+					printf("---PRINTING CHAT NODE LIST---\n");
 					printf("NODE: %d,  IP: %s,  PORT: %d,  NAME: %s,  THREAD: %d\n", i, ptr->chat_node->ip, ptr->chat_node->port_num, ptr->chat_node->log_name, ptr->chat_node->thread_num);
 				}
 				
