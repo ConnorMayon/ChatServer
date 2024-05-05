@@ -16,6 +16,9 @@ void* talk_to_client(void *_args)
 	char chatNodeName[16];
 	struct args* args = (struct args*) _args;
 	
+	// create a pointer for the chatroom list
+	ChatNodeLL *ptr = args->chatroomList;
+	
 	
 	// while the client is connected
 	while(1)
@@ -36,9 +39,6 @@ void* talk_to_client(void *_args)
 			// read the sender name
 		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
-		// create a pointer for the chatroom list
-		ChatNodeLL *ptr = args->chatroomList;
-		
 		// determine what identifier was sent in the message and start switch statement
 		switch(identifier)
 		{
@@ -51,13 +51,19 @@ void* talk_to_client(void *_args)
 				// send the join message to the chatroom for the requesting client
 				while(ptr->chat_node != NULL)
 				{
-					write(args->clientSocket, &buffOut, sizeof(buffOut));
+					// write to the current chat node
+					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
+					
+					// go to the next chat node
 					ptr = ptr->next_node;
 				}
 			
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
 				ChatNode* newNode = create_chat_node(chatNodeip, chatNodePort, chatNodeName);
+				
+					// add the new node's thread number manually
+				newNode->thread_num = args->clientSocket;
 				
 					// add the new clinet to the chat node list
 				add_chat_node(args->chatroomList, newNode);
@@ -76,15 +82,17 @@ void* talk_to_client(void *_args)
 			
 				// disconect the requesting client
 				identifier = LEAVE;
-				write(args->clientSocket, &identifier, sizeof(identifier));
+				write(args->clientSocket/*????*/, &identifier, sizeof(identifier));
 				
-				// send the leave message to the entire chatroom
+				// create the leave message to sent to the chatroom
 				identifier = NOTE;
 				sprintf(buffOut, "%s has left\n", chatNodeName);
+				
+				// send the leave message to the entire chatroom
 				while(ptr->chat_node != NULL)
 				{
-					write(args->clientSocket, &identifier, sizeof(identifier));
-					write(args->clientSocket, &buffOut, sizeof(buffOut));
+					write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
+					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 					ptr = ptr->next_node;
 				}
 				
@@ -98,7 +106,7 @@ void* talk_to_client(void *_args)
 				sprintf(buffOut, "L\n");
 				while(ptr->chat_node != NULL)
 				{
-					write(args->clientSocket, &buffOut, sizeof(buffOut));
+					write(ptr->chat_node->thread_num, &buffOut, sizeof(buffOut));
 					ptr = ptr->next_node;
 				}
 				
@@ -115,13 +123,13 @@ void* talk_to_client(void *_args)
 					if(ptr->chat_node->log_name != chatNodeName)
 					{
 						// write the indentifier
-						write(args->clientSocket, &identifier, sizeof(identifier));
+						write(ptr->chat_node->thread_num, &identifier, sizeof(identifier));
 						
 						// write the message
-						write(args->clientSocket, &message, sizeof(message));
+						write(ptr->chat_node->thread_num, &message, sizeof(message));
 						
 						// write the sender
-						write(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
+						write(ptr->chat_node->thread_num, &chatNodeName, sizeof(chatNodeName));
 					}
 					ptr = ptr->next_node;
 				}
