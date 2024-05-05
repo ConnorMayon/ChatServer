@@ -109,16 +109,16 @@ void* talk_to_client(void *_args)
 
 				// DEBUG: TEST THE LINKED LIST CHAT NODE
 				printf("---TESTING LINKED LIST---\n");
-				wrkptr = ptr;
-				while(wrkptr->chat_node != NULL)
+				ptr = args->chatroomList;
+				while(ptr->chat_node != NULL)
 				{
-					printf("IP: %s,  ", wrkptr->chat_node->ip);
-					printf("PORT: %d,  ", wrkptr->chat_node->port_num);
-					printf("NAME: %s,  ", wrkptr->chat_node->log_name);
-					printf("THREAD: %d\n", wrkptr->chat_node->thread_num);
+					printf("IP: %s,  ", ptr->chat_node->ip);
+					printf("PORT: %d,  ", ptr->chat_node->port_num);
+					printf("NAME: %s,  ", ptr->chat_node->log_name);
+					printf("THREAD: %d\n", ptr->chat_node->thread_num);
 					
 					// go to the next chat node
-					wrkptr = wrkptr->next_node;
+					ptr = ptr->next_node;
 				}
 				
 				// DEBUG: CHECK IF MAKES IT PASSED MAKING CHAT NODE
