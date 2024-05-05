@@ -1,13 +1,13 @@
 #include "receiver_handler.h"
 
 
+
 // function that handles recieving from client
 void *runReceiving(void *_args)
     {
     struct conn_args *args = (struct conn_args *) _args;
     Message* receiveMessage = (Message*) malloc(sizeof(Message));
-
-    while(args->active)
+    while(true)
         {
         // while connected to a server
         while(args->connected)
@@ -16,6 +16,7 @@ void *runReceiving(void *_args)
             receive_message_from_server(clientSocket, receiveMessage);
 	    ChatNode thisNode = receiveMessage->chat_node;
 	    printf("%s", thisNode.log_name);
+	    pthread_mutex_lock(&mutex);
             switch(receiveMessage->message_type)
                 {
                 // translate control code
@@ -44,13 +45,13 @@ void *runReceiving(void *_args)
                     printf("Shutting down");
                     // run shutdown
                     args->connected = false;
-                    args->active = false;
+                    exit(EXIT_SUCCESS);
                 break;
                 }
             
             printf(RESET_COLOR);
-            clientActive = args->active;
             clientConnected = args->connected;
+            pthread_mutex_unlock(&mutex);
             }
         }
     free(receiveMessage);

@@ -27,22 +27,21 @@
 #include <pthread.h>
 #include <unistd.h> 
 
-#include "../text_color.h"
+#include "text_color.h"
 
 //function prototype declarations
 void *runReceiving(void *_args);
 
 struct conn_args {
        bool connected;
-       bool active;
        char serverAdd[15];
        int serverPort;
        ChatNode* chatNode;
      };
 
 
-extern bool clientActive;
 extern bool clientConnected;
 extern int clientSocket;
+extern pthread_mutex_t mutex;
 
 #endif

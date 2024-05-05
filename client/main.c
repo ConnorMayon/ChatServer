@@ -3,9 +3,9 @@
 /************************************************************************
  * MAIN
  ************************************************************************/
-bool clientActive;
 bool clientConnected;
 int clientSocket;
+pthread_mutex_t mutex;
 
 int main(int argc, char *argv[]) {            
     char temp[50];
@@ -19,9 +19,7 @@ int main(int argc, char *argv[]) {
     // set conn_args
     struct conn_args *args = malloc (sizeof (struct conn_args));
     args->connected = false;
-    args->active = true;
-
-    clientActive = args->active;
+    
     clientConnected = args->connected;
 
     // read properties

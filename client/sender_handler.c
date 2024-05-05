@@ -1,4 +1,5 @@
 #include "sender_handler.h"
+
 // function that handles sending to client
 void *runSending(void *_args)
     {
@@ -6,11 +7,11 @@ void *runSending(void *_args)
     char input[1000];
     Message* sendMessage;
 
-    while(args->active)
+    while(true)
         {
-        
         // continuously reads client input
         fgets(input, sizeof(input), stdin);
+        pthread_mutex_lock(&mutex);
         // translantes client input into control code
         if(strcmp(input, "LEAVE\n") == 0)
             {
@@ -71,11 +72,13 @@ void *runSending(void *_args)
                     // send to server
                     send_message_to_server(clientSocket, sendMessage);
 
+                    // end connection to client
                     args->connected = false;
                     free(sendMessage);
+                    close(clientSocket);
                 }
                 // handle shutdown
-                args->active = false;
+                exit(EXIT_SUCCESS);
             }
         else if(strcmp(input, "SHUTDOWN ALL\n") == 0)
             {
@@ -119,8 +122,9 @@ void *runSending(void *_args)
             }
 
 
-        clientActive = args->active;
         clientConnected = args->connected;
+        
+        pthread_mutex_unlock(&mutex);
         }
     return NULL;
     }
