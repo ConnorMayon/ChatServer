@@ -47,7 +47,7 @@ void* talk_to_client(void *_args)
 			// if the JOIN identifier was sent
 			case JOIN:
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
-				//printf("CASE: JOIN");
+				printf("CASE: JOIN");
 				
 				// lock mutex
 				//pthread_mutex_lock(&clients_mutex);
@@ -65,7 +65,7 @@ void* talk_to_client(void *_args)
 				// DEBUG:
 				//printf("Add chat node ptr %p\n", ptr);
 				//printf("Add chat node ptr next node %p\n", ptr->next_node);
-				//printf("Add chat node new node %p\n", newNode);
+				printf("Add chat node new node %p\n", newNode);
 				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
