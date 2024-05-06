@@ -31,7 +31,7 @@ void* talk_to_client(void *_args)
 	
 	if(clientSocket == NULL)
 	{
-		close(args->clientSocket);
+		close(clientSocket);
 		pthread_exit(EXIT_FAILURE);
 	}
 	// DEBUG: CHECK FOR PASSING LL
@@ -88,7 +88,7 @@ void* talk_to_client(void *_args)
 				ChatNode* newNode = create_chat_node(inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
 				
 					// add the new node's thread number manually
-				newNode->thread_num = args->clientSocket;
+				newNode->thread_num = clientSocket;
 				
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
@@ -163,7 +163,7 @@ void* talk_to_client(void *_args)
 				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
 				
 				// close the thread between the sender and server
-				close(args->clientSocket);
+				close(clientSocket);
 				pthread_exit(EXIT_SUCCESS);
 				
 			// if the SHUTDOWN ALL identifier was sent
