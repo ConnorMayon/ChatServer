@@ -37,22 +37,34 @@ ChatNodeBounds* create_chat_node_bounds() {
 }
 
 void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
-    ChatNodeLL* after_node;
+    
+    ChatNodeLL* after_node, free_node;
     ChatNodeLL* temp_node = chat_node_ll;
     ChatNodeLL* next_node = temp_node->next_node;
-    after_node = temp_node->next_node;
+
+    // Chec if deletion node is first node
+    if (chat_node_ll->chat_node == deletion_node)
+    {
+        free_node = chat_node_ll;
+        if (chat_node_ll->next_node != NULL) chat_node_ll = chat_node_ll->next_node;
+        free(free_node);
+        return;
+    }
 
     // Iterate through each chat node in linked list until the next node is the deletion node
     while (next_node->chat_node != deletion_node) 
     {
         temp_node = next_node;
         next_node = temp_node->next_node;
+
+        // Assume deletion node does not exist
+        if (temp_node == NULL) return;
     }
 
     // Store pointer to next node in a variable
     after_node = next_node->next_node;
+
     // Set next node pointer equal to the deletion node's next node pointer
-    
     temp_node->next_node = after_node;
 
     printf("\nnext node: %i \n", next_node);
