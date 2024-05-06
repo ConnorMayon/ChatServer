@@ -136,7 +136,7 @@ void* talk_to_client(void *_args)
 				}
 				
 				// form the message struct so we can send a message to all the other clients
-				outputMessage = create_message(LEAVE, inputMessage->note, inputMessage->chat_node);
+				outputMessage = create_message(LEAVE, inputMessage->note, &inputMessage->chat_node);
 
 				// DEBUG: TEST WHO THE MESSAGE SENDER IS
 				printf("---OUTPUT READING---\n");
