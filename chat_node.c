@@ -15,7 +15,7 @@ void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node) {
     temp_node->next_node = (ChatNodeLL*) malloc(sizeof(ChatNodeLL));
     temp_node = temp_node->next_node;
     temp_node->chat_node = insertion_node;
-    printf("\n\nTemp node: %i\n", temp_node->chat_node);
+    printf("\n\nTemp node: %p\n", temp_node->chat_node);
 }
 
 ChatNode* create_chat_node(char* ip, int port_num, char* log_name) {
@@ -48,14 +48,14 @@ void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
     ChatNodeLL* temp_node = chat_node_ll;
     ChatNodeLL* next_node = temp_node->next_node;
 
-    printf("deletion node %i\n", deletion_node);
+    printf("deletion node %p\n", deletion_node);
 
     printf("Entering loop\n");
     // Iterate through each chat node in linked list until the next node is the deletion node
     while (next_node->chat_node != deletion_node) 
     {
-        printf("Temp node %i\n", temp_node);
-        printf("Next node %i\n", next_node);
+        printf("Temp node %p\n", temp_node);
+        printf("Next node %p\n", next_node);
         temp_node = next_node;
         next_node = temp_node->next_node;
 
@@ -73,8 +73,8 @@ void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
     // Set next node pointer equal to the deletion node's next node pointer
     temp_node->next_node = after_node;
 
-    printf("next node: %i \n", next_node);
-    printf("\ndeletion node: %i\n", deletion_node);
+    printf("next node: %p \n", next_node);
+    printf("\ndeletion node: %p\n", deletion_node);
     free(next_node);
 
     printf("Freed temp node \n");
