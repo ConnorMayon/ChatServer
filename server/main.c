@@ -4,7 +4,7 @@
 #include "main.h"
 
 // mutex
-pthread_mutex_t clients_mutex;
+pthread_mutex_t clientsMutex;
 
 /* ************************************************************************* */
 /* MAIN                                                                      */
@@ -76,7 +76,7 @@ int main()
 	while(true)
 	{
 		// mutex lock
-		pthread_mutex_lock(&clients_mutex);
+		pthread_mutex_lock(&clientsMutex);
 
 		// create the client socket
 		clientSocket = accept(serverSocket, NULL, NULL);
