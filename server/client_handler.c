@@ -61,6 +61,8 @@ void* talk_to_client(void *_args)
 				
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
+				printf("Add chat node ptr %i\n", ptr);
+				printf("Add chat node new node %i\n", newNode);
 				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
