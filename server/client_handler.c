@@ -87,7 +87,7 @@ void* talk_to_client(void *_args)
 					if(ptr->chat_node != newNode)
 					{
 						// DEBUG: PRINT THREAD NUMBER
-						printf("THREAD NUMBER: %d.", ptr->chat_node->thread_num);
+//						printf("THREAD NUMBER: %d.", ptr->chat_node->thread_num);
 						
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
