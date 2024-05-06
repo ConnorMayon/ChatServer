@@ -26,11 +26,16 @@ void* talk_to_client(void *_args)
 	// create a pointer for the chatroom list
 	ChatNodeLL *ptr = args->chatroomList;
 
+	// DEBUG: CHECK FOR PASSING LL
+	printf("PASSED LL\n");
+	
 	if(clientSocket == NULL)
 	{
 		close(args->clientSocket);
 		pthread_exit(EXIT_FAILURE);
 	}
+	// DEBUG: CHECK FOR PASSING LL
+	printf("PASSED SOCKET CHECK\n");
 	
 	// while the client is connected
 	while(1)
@@ -64,6 +69,8 @@ void* talk_to_client(void *_args)
 		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
 		printf("\n\n\n====== NEW CASE ======\n");
+
+		
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(inputMessage->message_type)
