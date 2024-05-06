@@ -61,6 +61,8 @@ void* talk_to_client(void *_args)
 				
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
+				
+				// DEBUG:
 				printf("Add chat node ptr %p\n", ptr);
 				printf("Add chat node ptr next node %p\n", ptr->next_node);
 				printf("Add chat node new node %p\n", newNode);
@@ -137,9 +139,12 @@ void* talk_to_client(void *_args)
 					// if the selected chat node is not the leaving node
 					if(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0 )
 					{
+						// DEBUG: TEST THE NAMES
+						printf("NAME FROM CHAT NODE: %s, NAME FROM ORIGINAL SENT MESSAGE: %s.\n", ptr->chat_node->log_name, inputMessage->chat_node.log_name);
+						
 						// DEBUG: TEST WHO THE MESSAGE SENDER IS
-						printf("---OUTPUT READING RIGHT BEFORE SEND---\n");
-						printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
+						//printf("---OUTPUT READING RIGHT BEFORE SEND---\n");
+						//printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
