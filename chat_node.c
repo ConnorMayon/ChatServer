@@ -23,8 +23,8 @@ ChatNode* create_chat_node(char* ip, int port_num, char* log_name) {
 
     // Assign parameter values to newly created chat node struct
     strcpy(newNode->ip, ip);
-    newNode->port_num = portNum;
-    strcpy(newNode->log_name, logName);
+    newNode->portNum = portNum;
+    strcpy(newNode->logName, logName);
 
     // Return struct
     return newNode;
