@@ -85,7 +85,7 @@ void* talk_to_client(void *_args)
 					ptr = ptr->next_node;
 					
 					// if the selected chat node doesn't equal the newly created node
-					if(!ptr->chat_node == newNode)
+					if(ptr->chat_node != newNode)
 					{
 						// DEBUG: PRINT THREAD NUMBER
 						printf("THREAD NUMBER: %d.", ptr->chat_node->thread_num);
