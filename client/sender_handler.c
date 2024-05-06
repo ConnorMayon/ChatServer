@@ -78,7 +78,6 @@ void *runSending(void *_args)
                     free(sendMessage);
                     close(clientSocket);
                     clientSocket = -1;
-                    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
                 }
                 // handle shutdown
                 exit(EXIT_SUCCESS);
@@ -131,7 +130,8 @@ void *runSending(void *_args)
 // connects to server
 bool makeConnection(char *addr, int port)
     {
-    struct sockaddr_in client_address;  
+    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
+    struct sockaddr_in client_address; 
 
     // create addr struct
     client_address.sin_family = AF_INET;
