@@ -13,7 +13,6 @@ void *runSending(void *_args)
         // continuously reads client input
         input[0] = '\0';
         fgets(input, sizeof(input), stdin);
-        printf("--input: %s", input);
         // translantes client input into control code
         if(strcmp(input, "LEAVE\n") == 0)
             {
