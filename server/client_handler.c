@@ -143,7 +143,7 @@ void* talk_to_client(void *_args)
 				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
 
 				// remove the chat node
-				remove_chat_node(headPtr, &inputMessage->chat_node);
+				remove_chat_node(headPtr, &ptr->chat_node);
 				
 				// close the thread between the sender and server
 				close(clientSocket);
