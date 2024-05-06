@@ -185,7 +185,7 @@ void* talk_to_client(void *_args)
 				//printf("CASE: NOTE\n");
 
 				// form the message struct so we can send the note to all the other clients before shutting down
-				outputMessage = create_message(NOTE, inputMessage->note, inputMessage->chat_node);
+				outputMessage = create_message(NOTE, inputMessage->note, &inputMessage->chat_node);
 
 				// send the message to everyone but the sender
 				while(ptr->next_node != NULL)
