@@ -1,52 +1,52 @@
 #include "message.h"
 
-Message* create_message(char message_type, char note[], ChatNode* chat_node) {
+Message* create_message(char messageType, char note[], ChatNode* chatNode) {
     // Allocate memory for message struct
-    Message* new_message = (Message*) malloc(sizeof(Message));
+    Message* newMessage = (Message*) malloc(sizeof(Message));
 
     // Assign parameter values to newly created message struct
-    new_message->message_type = message_type;
+    newMessage->messageType = messageType;
     for(int i = 0; i < 64; i++)
-        new_message->note[i] = note[i];
-    new_message->chat_node = *chat_node;
+        newMessage->note[i] = note[i];
+    newMessage->chatNode = *chatNode;
 
     // Return message struct
-    return new_message;
+    return newMessage;
 }
 
 void send_message_to_server(int socket, Message* message) {
-    ChatNode* chat_node = &message->chat_node;
+    ChatNode* chatNode = &message->chatNode;
     // Send message type to socket
-    write(socket, &message->message_type, sizeof(char));
+    write(socket, &message->messageType, sizeof(char));
 
     // Send message note to socket
     write(socket, message->note, sizeof(char) * 64);
 
     // Send message chat node to socket
-    write(socket, chat_node->ip, sizeof(char) * 15);
-    int port_num = htonl(chat_node->port_num);
-    write(socket, &port_num, sizeof(int));
-    write(socket, chat_node->log_name, sizeof(char) * 16);
+    write(socket, chatNode->ip, sizeof(char) * 15);
+    int portNum = htonl(chatNode->portNum);
+    write(socket, &portNum, sizeof(int));
+    write(socket, chatNode->logName, sizeof(char) * 16);
 }
 
 void receive_message_from_server(int socket, Message* message) {
-    int loop_index;
-    int port_num;
-    ChatNode* chat_node = &message->chat_node;
+    int loopIndex;
+    int portNum;
+    ChatNode* chatNode = &message->chatNode;
 
     // Receive message type to socket
-    read(socket, &message->message_type, sizeof(char));
+    read(socket, &message->messageType, sizeof(char));
     // Receive message note to socket
-    for(loop_index = 0; loop_index < 64; loop_index++)
-        read(socket, message->note + loop_index, sizeof(char));
+    for(loopIndex = 0; loopIndex < 64; loopIndex++)
+        read(socket, message->note + loopIndex, sizeof(char));
        
     // Receive message chat node to socket
-    for(loop_index = 0; loop_index < 15; loop_index++)
-        read(socket, chat_node->ip + loop_index, sizeof(char));
+    for(loopIndex = 0; loopIndex < 15; loopIndex++)
+        read(socket, chatNode->ip + loopIndex, sizeof(char));
 
-    read(socket, &port_num, sizeof(int));
-    chat_node->port_num = ntohl(port_num);
+    read(socket, &portNum, sizeof(int));
+    chatNode->portNum = ntohl(portNum);
 
-    for (loop_index = 0; loop_index < 16; loop_index++)
-        read(socket, chat_node->log_name + loop_index, sizeof(char));
+    for (loopIndex = 0; loopIndex < 16; loopIndex++)
+        read(socket, chatNode->logName + loopIndex, sizeof(char));
 }
