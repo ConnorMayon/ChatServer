@@ -123,7 +123,7 @@ void* talk_to_client(void *_args)
 				ptr = ptr->next_node;
 
 				// determine sender
-				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node->log_name) != 0)
+				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0)
 				{
 					// go to the next chat node
 					ptr = ptr->next_node;
@@ -145,7 +145,7 @@ void* talk_to_client(void *_args)
 					ptr = ptr->next_node;
 					
 					// if the selected chat node is not the leaving node
-					if(ptr->chat_node->log_name != inputMessage->chat_node->log_name)
+					if(ptr->chat_node->log_name != inputMessage->chat_node.log_name)
 					{
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
@@ -165,7 +165,7 @@ void* talk_to_client(void *_args)
 				printf("CASE: SHUTDOWN ALL\n");
 				
 				// determine sender
-				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node->log_name) != 0)
+				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0)
 				{
 					// go to the next chat node
 					ptr = ptr->next_node;
@@ -199,7 +199,7 @@ void* talk_to_client(void *_args)
 				ptr = ptr->next_node;
 				
 				// determine sender
-				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node->log_name) != 0)
+				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0)
 				{
 					// go to the next chat node
 					ptr = ptr->next_node;
@@ -218,7 +218,7 @@ void* talk_to_client(void *_args)
 					ptr = ptr->next_node;
 					
 					// make sure the current node isn't the sender
-					if(strcmp(ptr->chat_node->log_name, inputMessage->chat_node->log_name) != 0)
+					if(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0)
 					{
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
