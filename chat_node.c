@@ -42,23 +42,17 @@ void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
     ChatNodeLL* temp_node = chat_node_ll;
     ChatNodeLL* next_node = temp_node->next_node;
 
-    // Chec if deletion node is first node
-    if (chat_node_ll->chat_node == deletion_node)
-    {
-        free_node = chat_node_ll;
-        if (chat_node_ll->next_node != NULL) chat_node_ll = chat_node_ll->next_node;
-        free(free_node);
-        return;
-    }
     printf("Entering loop\n");
     // Iterate through each chat node in linked list until the next node is the deletion node
     while (next_node->chat_node != deletion_node) 
     {
+        printf("Temp node %i\n", temp_node);
+        printf("Next node %i\n", next_node);
         temp_node = next_node;
         next_node = temp_node->next_node;
 
         // Assume deletion node does not exist
-        if (temp_node == NULL) return;
+        if (next_node == NULL) return;
     }
     printf("Finished loop\n");
     // Store pointer to next node in a variable
