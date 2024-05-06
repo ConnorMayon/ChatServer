@@ -3,7 +3,7 @@
 
 
 // function that handles recieving from client
-void *runReceiving()
+void *run_receiving()
     {
     Message* receiveMessage = (Message*) malloc(sizeof(Message));
     bool temp;

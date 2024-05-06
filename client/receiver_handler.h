@@ -30,7 +30,7 @@
 #include "../text_color.h"
 
 //function prototype declarations
-void *runReceiving();
+void *run_receiving();
 
 struct conn_args {
        char serverAdd[15];
