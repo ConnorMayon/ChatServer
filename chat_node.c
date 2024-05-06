@@ -38,7 +38,7 @@ ChatNodeBounds* create_chat_node_bounds() {
 
 void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
     printf("\nRemoving node\n");
-    ChatNodeLL* after_node, free_node;
+    ChatNodeLL* after_node, *free_node;
     ChatNodeLL* temp_node = chat_node_ll;
     ChatNodeLL* next_node = temp_node->next_node;
 
