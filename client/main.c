@@ -40,12 +40,12 @@ int main(int argc, char *argv[]) {
         
         // thread
         pthread_t thread[THREAD_COUNT];
-        if(pthread_create(&thread[0], NULL, runSending, args))
+        if(pthread_create(&thread[0], NULL, run_sending, args))
         {
             printf("Error creating sending thread");
         }
 
-        if(pthread_create(&thread[1], NULL, runReceiving, NULL))
+        if(pthread_create(&thread[1], NULL, run_receiving, NULL))
         {
             printf("Error creating receiving thread");        
         }
