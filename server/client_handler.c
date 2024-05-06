@@ -166,18 +166,17 @@ void* talk_to_client(void *_args)
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				printf("CASE: SHUTDOWN ALL\n");
 				
+				/*
 				// determine sender
 				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0)
 				{
 					// go to the next chat node
 					ptr = ptr->next_node;
 				}
+				*/
 				
 				// form the message struct so we can send a message to all the other clients before shutting down
-				outputMessage = create_message(SHUTDOWN_ALL, inputMessage->note, ptr->chat_node);
-				
-				// reset the pointer to the head.
-				ptr = headPtr;
+				outputMessage = create_message(SHUTDOWN_ALL, inputMessage->note, inputMessage->chat_node);
 				
 				// send the leave message to the entire chatroom
 				while(ptr->next_node != NULL)
