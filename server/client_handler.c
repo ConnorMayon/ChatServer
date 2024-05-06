@@ -61,19 +61,15 @@ void* talk_to_client(void *_args)
 		/* NEW UNTESTED READING CODE */
 		receive_message_from_server(clientSocket, inputMessage);
 
-		// DEBUG: MAKE SURE IT IS READING RIGHT
-		printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.", inputMessage->message_type, inputMessage->note[64], inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
-		
-		// DEBUG: CHECK FOR PASSED READING
-		printf("PASSED READING FROM THE CLIENT\n");
-		
 		// set the ptr to the (null) head
 		ptr = args->chatroomList;
 		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
 		printf("\n\n\n====== NEW CASE ======\n");
-
 		
+		// DEBUG: MAKE SURE IT IS READING RIGHT
+		printf("---INPUT READING---\n");
+		printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n", inputMessage->message_type, inputMessage->note[64], inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(inputMessage->message_type)
@@ -140,9 +136,10 @@ void* talk_to_client(void *_args)
 				}
 				
 				// form the message struct so we can send a message to all the other clients
-				outputMessage = create_message(LEAVE, inputMessage->note, ptr->chat_node);
+				outputMessage = create_message(LEAVE, inputMessage->note, inputMessage->chat_node);
 
 				// DEBUG: TEST WHO THE MESSAGE SENDER IS
+				printf("---OUTPUT READING---\n");
 				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.", outputMessage->message_type, outputMessage->note[64], outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 				
 				// reset the pointer to the head.
