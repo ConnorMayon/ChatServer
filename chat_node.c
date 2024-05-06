@@ -17,7 +17,7 @@ void add_chat_node(ChatNodeLL* chatNodeLL, ChatNode* insertionNode) {
 
 }
 
-ChatNode* create_chat_node(char* ip, int port_num, char* log_name) {
+ChatNode* create_chat_node(char* ip, int portNum, char* logName) {
     // Allocate memory for chat node struct
     ChatNode* newNode = (ChatNode*) malloc(sizeof(ChatNode));
 
