@@ -47,10 +47,10 @@ void* talk_to_client(void *_args)
 			// if the JOIN identifier was sent
 			case JOIN:
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
-				printf("CASE: JOIN");
+				//printf("CASE: JOIN");
 				
 				// lock mutex
-				//pthread_mutex_lock(&clients_mutex);
+				pthread_mutex_lock(&clients_mutex);
 
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
@@ -97,7 +97,7 @@ void* talk_to_client(void *_args)
 					}
 				}
 				// lock mutex
-				//pthread_mutex_unlock(&clients_mutex);
+				pthread_mutex_unlock(&clients_mutex);
 				
 				// end of this case
 				break;				
