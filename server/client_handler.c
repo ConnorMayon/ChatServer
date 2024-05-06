@@ -176,7 +176,7 @@ void* talk_to_client(void *_args)
 				*/
 				
 				// form the message struct so we can send a message to all the other clients before shutting down
-				outputMessage = create_message(SHUTDOWN_ALL, inputMessage->note, inputMessage->chat_node);
+				outputMessage = create_message(SHUTDOWN_ALL, inputMessage->note, &inputMessage->chat_node);
 				
 				// send the leave message to the entire chatroom
 				while(ptr->next_node != NULL)
