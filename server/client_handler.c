@@ -183,22 +183,9 @@ void* talk_to_client(void *_args)
 			case NOTE:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
 				//printf("CASE: NOTE\n");
-				
-				// move past the null head
-				ptr = ptr->next_node;
-				
-				// determine sender
-				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0)
-				{
-					// go to the next chat node
-					ptr = ptr->next_node;
-				}
-				
-				// form the message struct so we can send the note to all the other clients before shutting down
-				outputMessage = create_message(NOTE, inputMessage->note, ptr->chat_node);
 
-				// reset the pointer to the head.
-				ptr = headPtr;
+				// form the message struct so we can send the note to all the other clients before shutting down
+				outputMessage = create_message(NOTE, inputMessage->note, inputMessage->chat_node);
 
 				// send the message to everyone but the sender
 				while(ptr->next_node != NULL)
