@@ -20,22 +20,14 @@ void* talk_to_client(void *_args)
 	// lock mutex
 	pthread_mutex_unlock(&clients_mutex);
 
-	// DEBUG: CHECK FOR PASSING UNLOCK
-	printf("PASSED UNLOCK\n");
-	
 	// create a pointer for the chatroom list
 	ChatNodeLL *ptr = args->chatroomList;
-
-	// DEBUG: CHECK FOR PASSING LL
-	printf("PASSED LL\n");
 	
 	if(clientSocket == NULL)
 	{
 		close(clientSocket);
 		pthread_exit(EXIT_FAILURE);
 	}
-	// DEBUG: CHECK FOR PASSING LL
-	printf("PASSED SOCKET CHECK\n");
 	
 	// while the client is connected
 	while(1)
@@ -140,7 +132,7 @@ void* talk_to_client(void *_args)
 
 				// DEBUG: TEST WHO THE MESSAGE SENDER IS
 				printf("---OUTPUT READING---\n");
-				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.", outputMessage->message_type, outputMessage->note[64], outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
+				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note[64], outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 				
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
@@ -155,8 +147,12 @@ void* talk_to_client(void *_args)
 					ptr = ptr->next_node;
 					
 					// if the selected chat node is not the leaving node
-					if(ptr->chat_node->log_name != inputMessage->chat_node.log_name)
+					if(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0 )
 					{
+						// DEBUG: TEST WHO THE MESSAGE SENDER IS
+						printf("---OUTPUT READING RIGHT BEFORE SEND---\n");
+						printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note[64], outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
+
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
