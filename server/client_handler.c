@@ -16,12 +16,13 @@ void* talk_to_client(void *_args)
 	Message* outputMessage = (Message*) malloc(sizeof(Message));
 	struct args* args = (struct args*) _args;
 	int clientSocket = args->clientSocket;
+	ChatNodeLL *headPtr = args->chatroomList;
 
 	// lock mutex
 	pthread_mutex_unlock(&clients_mutex);
 
 	// create a pointer for the chatroom list
-	ChatNodeLL *ptr = args->chatroomList;
+	ChatNodeLL *ptr = headPtr;
 	
 	if(clientSocket == NULL)
 	{
@@ -54,7 +55,7 @@ void* talk_to_client(void *_args)
 		receive_message_from_server(clientSocket, inputMessage);
 
 		// set the ptr to the (null) head
-		ptr = args->chatroomList;
+		ptr = headPtr;
 		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
 		printf("\n\n\n====== NEW CASE ======\n");
@@ -135,7 +136,7 @@ void* talk_to_client(void *_args)
 				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note[64], outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 				
 				// reset the pointer to the head.
-				ptr = args->chatroomList;
+				ptr = headPtr;
 
 				// DEBUG: START SENDING MESSAGE TO THE CHATROOM
 				printf("SENDING MESSAGE TO CHATROOM\n");
@@ -181,7 +182,7 @@ void* talk_to_client(void *_args)
 				outputMessage = create_message(SHUTDOWN_ALL, inputMessage->note, ptr->chat_node);
 				
 				// reset the pointer to the head.
-				ptr = args->chatroomList;
+				ptr = headPtr;
 				
 				// send the leave message to the entire chatroom
 				while(ptr->next_node != NULL)
@@ -215,7 +216,7 @@ void* talk_to_client(void *_args)
 				outputMessage = create_message(NOTE, inputMessage->note, ptr->chat_node);
 
 				// reset the pointer to the head.
-				ptr = args->chatroomList;
+				ptr = headPtr;
 
 				// send the message to everyone but the sender
 				while(ptr->next_node != NULL)
