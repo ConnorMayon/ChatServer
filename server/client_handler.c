@@ -54,7 +54,7 @@ void* talk_to_client(void *_args)
 		*/
 
 		/* NEW UNTESTED READING CODE */
-		receive_message_from_server(clientSocket, inputMessage)
+		receive_message_from_server(clientSocket, inputMessage);
 		
 		// DEBUG: CHECK FOR PASSED READING
 		printf("PASSED READING FROM THE CLIENT\n");
