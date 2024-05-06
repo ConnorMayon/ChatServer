@@ -7,11 +7,6 @@
 void* talk_to_client(void *_args)
 {
 	// initialize varaibles
-//	char identifier;
-//	char message[64];
-//	char chatNodeip[15];
-//	int chatNodePort;
-//	char chatNodeName[16];
 	Message* inputMessage = (Message*) malloc(sizeof(Message));
 	Message* outputMessage = (Message*) malloc(sizeof(Message));
 	struct args* args = (struct args*) _args;
