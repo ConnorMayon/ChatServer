@@ -9,7 +9,7 @@
 
 typedef struct chatNodeStruct {
     char ip[15];
-    int portNnum;
+    int portNum;
     char logName[16];
     int threadNum;
 } ChatNode;
