@@ -47,10 +47,14 @@ void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
     // Store pointer to next node in a variable
     after_node= after_node->next_node;
     // Set next node pointer equal to the deletion node's next node pointer
-    free(temp_node->next_node);
+    
     temp_node->next_node = after_node;
+    free(temp_node->next_node);
+
+    printf("\nFreed temp node\n");
 
     // Free deletion node
     free(deletion_node);
+    printf("\nFreed deletion node\n");
 }
 
