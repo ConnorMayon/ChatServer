@@ -77,6 +77,8 @@ void *runSending(void *_args)
                     clientConnected = false;
                     free(sendMessage);
                     close(clientSocket);
+                    clientSocket = -1;
+                    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
                 }
                 // handle shutdown
                 exit(EXIT_SUCCESS);
