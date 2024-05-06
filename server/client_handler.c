@@ -35,11 +35,11 @@ void* talk_to_client(void *_args)
 		ptr = headPtr;
 		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
-		printf("\n\n\n====== NEW CASE ======\n");
+//		printf("\n\n\n====== NEW CASE ======\n");
 		
 		// DEBUG: MAKE SURE IT IS READING RIGHT
-		printf("---INPUT READING---\n");
-		printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n", inputMessage->message_type, inputMessage->note, inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
+//		printf("---INPUT READING---\n");
+//		printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n", inputMessage->message_type, inputMessage->note, inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(inputMessage->message_type)
@@ -47,10 +47,7 @@ void* talk_to_client(void *_args)
 			// if the JOIN identifier was sent
 			case JOIN:
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
-				printf("CASE: JOIN");
-				
-				// lock mutex
-				//pthread_mutex_lock(&clients_mutex);
+//				printf("CASE: JOIN");
 
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
@@ -62,10 +59,10 @@ void* talk_to_client(void *_args)
 					// add the new clinet to the chat node list
 				add_chat_node(ptr, newNode);
 				
-				// DEBUG:
-				printf("Add chat node ptr %p\n", ptr);
-				printf("Add chat node ptr next node %p\n", ptr->next_node);
-				printf("Add chat node new node %p\n", newNode);
+				// DEBUG: POINTER PRINTING
+//				printf("Add chat node ptr %p\n", ptr);
+//				printf("Add chat node ptr next node %p\n", ptr->next_node);
+//				printf("Add chat node new node %p\n", newNode);
 				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
@@ -77,8 +74,8 @@ void* talk_to_client(void *_args)
 				outputMessage = create_message(JOIN, inputMessage->note, newNode);
 
 				// DEBUG: TEST THE OUTPUT MESSAGE
-				printf("---OUTPUT READING---\n");
-				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
+//				printf("---OUTPUT READING---\n");
+//				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 				
 				// send the join message to the chatroom for the requesting client
 				while(ptr->next_node != NULL)
@@ -96,8 +93,6 @@ void* talk_to_client(void *_args)
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
-				// lock mutex
-				//pthread_mutex_unlock(&clients_mutex);
 				
 				// end of this case
 				break;				
@@ -105,7 +100,7 @@ void* talk_to_client(void *_args)
 			// if the LEAVE identifier was sent
 			case LEAVE:
 				// DEBUG: CHECK IF FINDING CASE
-				printf("CASE: LEAVE\n");
+//				printf("CASE: LEAVE\n");
 				
 				// move past the null head
 				ptr = ptr->next_node;
@@ -121,14 +116,14 @@ void* talk_to_client(void *_args)
 				outputMessage = create_message(LEAVE, inputMessage->note, &inputMessage->chat_node);
 
 				// DEBUG: TEST WHO THE MESSAGE SENDER IS
-				printf("---OUTPUT READING---\n");
-				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
+//				printf("---OUTPUT READING---\n");
+//				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 				
 				// reset the pointer to the head.
 				ptr = headPtr;
 
 				// DEBUG: START SENDING MESSAGE TO THE CHATROOM
-				printf("SENDING MESSAGE TO CHATROOM\n");
+//				printf("SENDING MESSAGE TO CHATROOM\n");
 				
 				// send the leave message to the rest of the chatroom
 				while(ptr->next_node != NULL)
@@ -140,11 +135,11 @@ void* talk_to_client(void *_args)
 					if(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0 )
 					{
 						// DEBUG: TEST THE NAMES
-						printf("NAME FROM CHAT NODE: %s, NAME FROM ORIGINAL SENT MESSAGE: %s.\n", ptr->chat_node->log_name, inputMessage->chat_node.log_name);
+//						printf("NAME FROM CHAT NODE: %s, NAME FROM ORIGINAL SENT MESSAGE: %s.\n", ptr->chat_node->log_name, inputMessage->chat_node.log_name);
 						
 						// DEBUG: TEST WHO THE MESSAGE SENDER IS
-						//printf("---OUTPUT READING RIGHT BEFORE SEND---\n");
-						//printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
+//						printf("---OUTPUT READING RIGHT BEFORE SEND---\n");
+//						printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
@@ -152,7 +147,7 @@ void* talk_to_client(void *_args)
 				}
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
-				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
+//				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
 
 				// remove the chat node
 				remove_chat_node(headPtr, &ptr->chat_node);
@@ -164,16 +159,7 @@ void* talk_to_client(void *_args)
 			// if the SHUTDOWN ALL identifier was sent
 			case SHUTDOWN_ALL:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
-				printf("CASE: SHUTDOWN ALL\n");
-				
-				/*
-				// determine sender
-				while(strcmp(ptr->chat_node->log_name, inputMessage->chat_node.log_name) != 0)
-				{
-					// go to the next chat node
-					ptr = ptr->next_node;
-				}
-				*/
+//				printf("CASE: SHUTDOWN ALL\n");
 				
 				// form the message struct so we can send a message to all the other clients before shutting down
 				outputMessage = create_message(SHUTDOWN_ALL, inputMessage->note, &inputMessage->chat_node);
@@ -194,7 +180,7 @@ void* talk_to_client(void *_args)
 			// if the NOTE identifier was sent
 			case NOTE:
 				// DEBUG: CHECK IF CORRECTLY GOT IDENTIFIER
-				printf("CASE: NOTE\n");
+//				printf("CASE: NOTE\n");
 				
 				// move past the null head
 				ptr = ptr->next_node;
@@ -225,7 +211,6 @@ void* talk_to_client(void *_args)
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
 				}
-				
 				// end of this case
 			// end of the switch statement
 		}
