@@ -60,6 +60,9 @@ void* talk_to_client(void *_args)
 
 		/* NEW UNTESTED READING CODE */
 		receive_message_from_server(clientSocket, inputMessage);
+
+		// DEBUG: MAKE SURE IT IS READING RIGHT
+		printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.", inputMessage->message_type, inputMessage->note[64], inputMessage->chat_node.ip, inputMessage->chat_node.port, inputMessage->chat_node.log_name);
 		
 		// DEBUG: CHECK FOR PASSED READING
 		printf("PASSED READING FROM THE CLIENT\n");
@@ -138,6 +141,9 @@ void* talk_to_client(void *_args)
 				
 				// form the message struct so we can send a message to all the other clients
 				outputMessage = create_message(LEAVE, inputMessage->note, ptr->chat_node);
+
+				// DEBUG: TEST WHO THE MESSAGE SENDER IS
+				printf();
 				
 				// reset the pointer to the head.
 				ptr = args->chatroomList;
