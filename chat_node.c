@@ -2,6 +2,11 @@
 
 void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node) {
     ChatNodeLL* temp_node = chat_node_ll;
+    if (chat_node_ll == NULL)
+    {
+        chat_node_ll = insertion_node;
+        return;
+    }
     // Iterate through each chat node in linked list until the next node is NULL
     while(temp_node->next_node != NULL) temp_node = temp_node->next_node;
 
