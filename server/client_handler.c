@@ -30,29 +30,29 @@ void* talk_to_client(void *_args)
 		close(args->clientSocket);
 		pthread_exit(EXIT_FAILURE);
 	}
-
-	// read the message sent from the client in the stages sent
-		// read the identifier
-	read(clientSocket, &identifier, sizeof(identifier));
-	
-		// read the message
-	read(clientSocket, &message, sizeof(message));
-		
-		// read the sender ip
-	read(clientSocket, &chatNodeip, sizeof(chatNodeip));
-		
-		// read the sender port
-	read(clientSocket, &chatNodePort, sizeof(chatNodePort));
-		
-		// read the sender name
-	read(clientSocket, &chatNodeName, sizeof(chatNodeName));
-
-	// DEBUG: CHECK FOR PASSED READING
-	printf("PASSED READING FROM THE CLIENT\n");
 	
 	// while the client is connected
 	while(1)
 	{
+		// read the message sent from the client in the stages sent
+			// read the identifier
+		read(clientSocket, &identifier, sizeof(identifier));
+	
+			// read the message
+		read(clientSocket, &message, sizeof(message));
+		
+			// read the sender ip
+		read(clientSocket, &chatNodeip, sizeof(chatNodeip));
+		
+			// read the sender port
+		read(clientSocket, &chatNodePort, sizeof(chatNodePort));
+		
+			// read the sender name
+		read(clientSocket, &chatNodeName, sizeof(chatNodeName));
+
+		// DEBUG: CHECK FOR PASSED READING
+		printf("PASSED READING FROM THE CLIENT\n");
+				
 		// set the ptr to the (null) head
 		ptr = args->chatroomList;
 		
