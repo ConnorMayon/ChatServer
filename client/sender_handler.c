@@ -1,7 +1,7 @@
 #include "sender_handler.h"
 
 // function that handles sending to client
-void *runSending(void *_args)
+void *run_sending(void *_args)
     {
     struct conn_args *args = (struct conn_args *) _args;
     char input[64];
@@ -47,7 +47,7 @@ void *runSending(void *_args)
                     sendMessage = create_message(JOIN, blankString, args->chatNode);
 
                     // connect to server
-                    if(!makeConnection(args->serverAdd, args->serverPort)) exit(EXIT_FAILURE);
+                    if(!make_connection(args->serverAdd, args->serverPort)) exit(EXIT_FAILURE);
                     clientConnected = true;
 
                     // send to server
@@ -128,7 +128,7 @@ void *runSending(void *_args)
     }
 
 // connects to server
-bool makeConnection(char *addr, int port)
+bool make_connection(char *addr, int port)
     {
     clientSocket = socket(AF_INET, SOCK_STREAM, 0);
     struct sockaddr_in client_address; 

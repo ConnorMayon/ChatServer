@@ -29,7 +29,7 @@
 
 
 //function prototype declarations
-void *runSending(void *_args);
-bool makeConnection(char *addr, int port);
+void *run_sending(void *_args);
+bool make_connection(char *addr, int port);
 
 #endif
