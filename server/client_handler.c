@@ -14,6 +14,7 @@ void* talk_to_client(void *_args)
 	char chatNodeName[16];
 	Message* outputMessage;
 	struct args* args = (struct args*) _args;
+	int clientSocket = args->clientSocket;
 
 	// lock mutex
 	pthread_mutex_unlock(&clients_mutex);
@@ -24,7 +25,7 @@ void* talk_to_client(void *_args)
 	// create a pointer for the chatroom list
 	ChatNodeLL *ptr = args->chatroomList;
 
-	if(args->clientSocket == NULL)
+	if(clientSocket == NULL)
 	{
 		close(args->clientSocket);
 		pthread_exit(EXIT_FAILURE);
@@ -32,19 +33,19 @@ void* talk_to_client(void *_args)
 
 	// read the message sent from the client in the stages sent
 		// read the identifier
-	read(args->clientSocket, &identifier, sizeof(identifier));
+	read(clientSocket, &identifier, sizeof(identifier));
 	
 		// read the message
-	read(args->clientSocket, &message, sizeof(message));
+	read(clientSocket, &message, sizeof(message));
 		
 		// read the sender ip
-	read(args->clientSocket, &chatNodeip, sizeof(chatNodeip));
+	read(clientSocket, &chatNodeip, sizeof(chatNodeip));
 		
 		// read the sender port
-	read(args->clientSocket, &chatNodePort, sizeof(chatNodePort));
+	read(clientSocket, &chatNodePort, sizeof(chatNodePort));
 		
 		// read the sender name
-	read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
+	read(clientSocket, &chatNodeName, sizeof(chatNodeName));
 
 	// DEBUG: CHECK FOR PASSED READING
 	printf("PASSED READING FROM THE CLIENT\n");
