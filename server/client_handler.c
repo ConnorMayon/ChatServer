@@ -51,7 +51,8 @@ void* talk_to_client(void *_args)
 
 				// connect the client to the chatroom by adding them to the chat node.
 					// create the new chat node to add later
-				ChatNode* newNode = create_chat_node(inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
+				ChatNode* newNode;
+				newNode = create_chat_node(inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
 				
 					// add the new node's thread number manually
 				newNode->thread_num = clientSocket;
