@@ -12,8 +12,8 @@ void* talk_to_client(void *_args)
 //	char chatNodeip[15];
 //	int chatNodePort;
 //	char chatNodeName[16];
-	Message* inputMessage;
-	Message* outputMessage;
+	Message* inputMessage = (Message*) malloc(sizeof(Message));
+	Message* outputMessage = (Message*) malloc(sizeof(Message));
 	struct args* args = (struct args*) _args;
 	int clientSocket = args->clientSocket;
 
