@@ -9,27 +9,27 @@
 
 typedef struct chatNodeStruct {
     char ip[15];
-    int port_num;
-    char log_name[16];
-    int thread_num;
+    int portNnum;
+    char logName[16];
+    int threadNum;
 } ChatNode;
 
 struct ChatNodeLL {
-    ChatNode* chat_node;
-    struct ChatNodeLL* next_node;
+    ChatNode* chatNode;
+    struct ChatNodeLL* nextNode;
 };
 
 struct ChatNodeLL;
 typedef struct ChatNodeLL ChatNodeLL;
 
 typedef struct chatNodeBounds {
-    ChatNode* first_node;
-    ChatNode* last_node;
+    ChatNode* firstNode;
+    ChatNode* lastNode;
 } ChatNodeBounds;
 
 
-void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node);
-ChatNode* create_chat_node(char* ip, int port_num, char* log_name);
+void add_chat_node(ChatNodeLL* chatNodeLL, ChatNode* insertionNode);
+ChatNode* create_chat_node(char* ip, int portNum, char* logName);
 ChatNodeBounds* create_chat_node_bounds();
-void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node);
+void remove_chat_node(ChatNodeLL* chatNodeLL, ChatNode* deletionNode);
 #endif
