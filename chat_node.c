@@ -37,7 +37,7 @@ ChatNodeBounds* create_chat_node_bounds() {
 }
 
 void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
-    printf("\nRemoving node\n")
+    printf("\nRemoving node\n");
     ChatNodeLL* after_node, free_node;
     ChatNodeLL* temp_node = chat_node_ll;
     ChatNodeLL* next_node = temp_node->next_node;
@@ -50,7 +50,7 @@ void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
         free(free_node);
         return;
     }
-    printf("Entering loop\n")
+    printf("Entering loop\n");
     // Iterate through each chat node in linked list until the next node is the deletion node
     while (next_node->chat_node != deletion_node) 
     {
@@ -60,7 +60,7 @@ void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
         // Assume deletion node does not exist
         if (temp_node == NULL) return;
     }
-    printf("Finished loop\n")
+    printf("Finished loop\n");
     // Store pointer to next node in a variable
     after_node = next_node->next_node;
 
