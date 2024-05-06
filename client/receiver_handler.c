@@ -42,6 +42,7 @@ void *runReceiving()
                 // if code is N
                     // print message
                     printf(NOTE_COLOR);
+                    receiveMessage->note[strlen(receiveMessage->note)-1] = '\0';
                     printf("%s:", thisNode.log_name);
                     printf("%s", receiveMessage->note);
 		    printf(RESET_COLOR);
