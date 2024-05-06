@@ -35,11 +35,11 @@ void* talk_to_client(void *_args)
 		ptr = headPtr;
 		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
-		printf("\n\n\n====== NEW CASE ======\n");
+		//printf("\n\n\n====== NEW CASE ======\n");
 		
 		// DEBUG: MAKE SURE IT IS READING RIGHT
-		printf("---INPUT READING---\n");
-		printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n", inputMessage->message_type, inputMessage->note, inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
+		//printf("---INPUT READING---\n");
+		//printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n", inputMessage->message_type, inputMessage->note, inputMessage->chat_node.ip, inputMessage->chat_node.port_num, inputMessage->chat_node.log_name);
 		
 		// determine what identifier was sent in the message and start switch statement
 		switch(inputMessage->message_type)
