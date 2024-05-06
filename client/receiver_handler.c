@@ -23,7 +23,6 @@ void *runReceiving()
             
 
 		    ChatNode thisNode = receiveMessage->chat_node;
-		    printf("%s", thisNode.log_name);
 		    switch(receiveMessage->message_type)
 		        {
 		        // translate control code
