@@ -65,7 +65,7 @@ void* talk_to_client(void *_args)
 				// DEBUG:
 				//printf("Add chat node ptr %p\n", ptr);
 				//printf("Add chat node ptr next node %p\n", ptr->next_node);
-				printf("Add chat node new node %p\n", newNode);
+				//printf("Add chat node new node %p\n", newNode);
 				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
