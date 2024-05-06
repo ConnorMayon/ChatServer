@@ -14,7 +14,6 @@ int main(int argc, char *argv[]) {
     char userName[16];
  
     // create an unnamed socket, and then name it
-    clientSocket = socket(AF_INET, SOCK_STREAM, 0);
 
     // set conn_args
     struct conn_args *args = malloc (sizeof (struct conn_args));
