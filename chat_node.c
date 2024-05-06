@@ -13,14 +13,14 @@ void add_chat_node(ChatNodeLL* chatNodeLL, ChatNode* insertionNode) {
 
 }
 
-ChatNode* create_chat_node(char* ip, int port_num, char* log_name) {
+ChatNode* create_chat_node(char* ip, int portNum, char* logName) {
     // Allocate memory for chat node struct
     ChatNode* newNode = (ChatNode*) malloc(sizeof(ChatNode));
 
     // Assign parameter values to newly created chat node struct
     strcpy(newNode->ip, ip);
-    newNode->port_num = port_num;
-    strcpy(newNode->log_name, log_name);
+    newNode->portNum = portNum;
+    strcpy(newNode->logName, logName);
 
     // Return struct
     return newNode;
@@ -28,13 +28,13 @@ ChatNode* create_chat_node(char* ip, int port_num, char* log_name) {
 
 ChatNodeBounds* create_chat_node_bounds() {
     // Allocate memory for chat node bounds struct
-    ChatNodeBounds* newNode_bounds = (ChatNodeBounds*)malloc(sizeof(ChatNodeBounds));
+    ChatNodeBounds* newNodeBounds = (ChatNodeBounds*)malloc(sizeof(ChatNodeBounds));
 
-    newNode_bounds->firstNode = NULL;
-    newNode_bounds->lastNode = NULL;
+    newNodeBounds->firstNode = NULL;
+    newNodeBounds->lastNode = NULL;
 
     // Return pointer to newly allocated memory
-    return newNode_bounds;
+    return newNodeBounds;
 }
 
 void remove_chat_node(ChatNodeLL* chatNodeLL, ChatNode* deletionNode) {
