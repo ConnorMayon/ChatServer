@@ -73,6 +73,10 @@ void* talk_to_client(void *_args)
 
 				// form the message struct so we can send a message to all the other clients
 				outputMessage = create_message(JOIN, inputMessage->note, newNode);
+
+				// DEBUG: TEST THE OUTPUT MESSAGE
+				printf("---OUTPUT READING---\n");
+				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 				
 				// send the join message to the chatroom for the requesting client
 				while(ptr->next_node != NULL)
@@ -83,6 +87,9 @@ void* talk_to_client(void *_args)
 					// if the selected chat node doesn't equal the newly created node
 					if(!ptr->chat_node == newNode)
 					{
+						// DEBUG: PRINT THREAD NUMBER
+						printf("THREAD NUMBER: %d.", ptr->chat_node->thread_num);
+						
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
 					}
