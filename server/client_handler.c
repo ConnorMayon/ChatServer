@@ -33,25 +33,7 @@ void* talk_to_client(void *_args)
 	// while the client is connected
 	while(1)
 	{
-		/* OLD READING CODE THAT WORKS 100% 
 		// read the message sent from the client in the stages sent
-			// read the identifier
-		read(clientSocket, &identifier, sizeof(identifier));
-	
-			// read the message
-		read(clientSocket, &message, sizeof(message));
-		
-			// read the sender ip
-		read(clientSocket, &chatNodeip, sizeof(chatNodeip));
-		
-			// read the sender port
-		read(clientSocket, &chatNodePort, sizeof(chatNodePort));
-		
-			// read the sender name
-		read(clientSocket, &chatNodeName, sizeof(chatNodeName));
-		*/
-
-		/* NEW UNTESTED READING CODE */
 		receive_message_from_server(clientSocket, inputMessage);
 
 		// set the ptr to the (null) head
@@ -161,6 +143,9 @@ void* talk_to_client(void *_args)
 				
 				// DEBUG: CHECK IF PASSED SENDING THE MESSAGE TO ALL CLIENTS
 				printf("PASSED SENDING THE MESSAGE TO ALL CLIENTS\n");
+
+				// remove the chat node
+				remove_chat_node(headPtr, inputMessage->chat_node);
 				
 				// close the thread between the sender and server
 				close(clientSocket);
