@@ -17,6 +17,9 @@ void* talk_to_client(void *_args)
 
 	// lock mutex
 	pthread_mutex_unlock(&clients_mutex);
+
+	// DEBUG: CHECK FOR PASSING UNLOCK
+	printf("PASSED UNLOCK\n");
 	
 	// create a pointer for the chatroom list
 	ChatNodeLL *ptr = args->chatroomList;
@@ -26,29 +29,33 @@ void* talk_to_client(void *_args)
 		close(args->clientSocket);
 		pthread_exit(EXIT_FAILURE);
 	}
+
+	// read the message sent from the client in the stages sent
+		// read the identifier
+	read(args->clientSocket, &identifier, sizeof(identifier));
 	
+		// read the message
+	read(args->clientSocket, &message, sizeof(message));
+		
+		// read the sender ip
+	read(args->clientSocket, &chatNodeip, sizeof(chatNodeip));
+		
+		// read the sender port
+	read(args->clientSocket, &chatNodePort, sizeof(chatNodePort));
+		
+		// read the sender name
+	read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
+
+	// DEBUG: CHECK FOR PASSED READING
+	printf("PASSED READING FROM THE CLIENT\n");
 	
 	// while the client is connected
+	/*
 	while(1)
 	{
+	*/
 		// set the ptr to the (null) head
 		ptr = args->chatroomList;
-		
-		// read the message sent from the client in the stages sent
-			// read the identifier
-		read(args->clientSocket, &identifier, sizeof(identifier));
-		
-			// read the message
-		read(args->clientSocket, &message, sizeof(message));
-		
-			// read the sender ip
-		read(args->clientSocket, &chatNodeip, sizeof(chatNodeip));
-		
-			// read the sender port
-		read(args->clientSocket, &chatNodePort, sizeof(chatNodePort));
-		
-			// read the sender name
-		read(args->clientSocket, &chatNodeName, sizeof(chatNodeName));
 		
 		// DEBUG: PRINT THAT A NEW CASE HAS BEGAN
 		printf("\n\n\n====== NEW CASE ======\n");
@@ -211,7 +218,7 @@ void* talk_to_client(void *_args)
 				// end of this case
 			// end of the switch statement
 		}
-	}
+	//}
 	// this will never be reached
 	//return NULL;
 // end of function
