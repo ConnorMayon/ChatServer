@@ -8,13 +8,13 @@
 #define NOTE 'n'
 
 typedef struct messageStruct {
-    char message_type;
+    char messageType;
     char note[64];
-    ChatNode chat_node;
+    ChatNode chatNode;
 } Message;
 
 
-Message* create_message(char message_type, char note[], ChatNode* chat_node);
+Message* create_message(char messageType, char note[], ChatNode* chatNode);
 void send_message_to_server(int socket, Message* message);
 void receive_message_from_server(int socket, Message* message);
 #endif
