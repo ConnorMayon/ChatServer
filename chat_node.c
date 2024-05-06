@@ -4,7 +4,6 @@ void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node) {
     ChatNodeLL* temp_node = chat_node_ll;
     if (chat_node_ll == NULL)
     {
-        printf("First node is null\n");
         chat_node_ll = insertion_node;
         return;
     }
@@ -15,8 +14,6 @@ void add_chat_node(ChatNodeLL* chat_node_ll, ChatNode* insertion_node) {
     temp_node->next_node = (ChatNodeLL*) malloc(sizeof(ChatNodeLL));
     temp_node = temp_node->next_node;
     temp_node->chat_node = insertion_node;
-    printf("\n\nTemp node: %p\n", temp_node);
-    printf("\n\nchat node ll next: %p\n", chat_node_ll->next_node);
 
 }
 
@@ -45,44 +42,34 @@ ChatNodeBounds* create_chat_node_bounds() {
 }
 
 void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
-    printf("\nRemoving node\n");
+    
     ChatNodeLL* after_node, *free_node;
     ChatNodeLL* temp_node = chat_node_ll;
     ChatNodeLL* next_node = temp_node->next_node;
 
-    printf("deletion node %p\n", deletion_node);
-
-    printf("Entering loop\n");
+ 
     // Iterate through each chat node in linked list until the next node is the deletion node
     while (next_node->chat_node != deletion_node) 
     {
-        printf("Temp node %p\n", temp_node);
-        printf("Next node %p\n", next_node);
         temp_node = next_node;
         next_node = temp_node->next_node;
 
         // Assume deletion node does not exist
         if (next_node == NULL) 
         {
-        printf("Deletion node not found\n");
         return;
         }
     }
-    printf("Deletion node found\n");
     // Store pointer to next node in a variable
     after_node = next_node->next_node;
 
     // Set next node pointer equal to the deletion node's next node pointer
     temp_node->next_node = after_node;
 
-    printf("next node: %p \n", next_node);
-    printf("\ndeletion node: %p\n", deletion_node);
     free(next_node);
 
-    printf("Freed temp node \n");
 
     // Free deletion node
     free(deletion_node);
-    printf("\nFreed deletion node\n");
 }
 
