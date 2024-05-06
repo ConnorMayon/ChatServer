@@ -52,9 +52,13 @@ void remove_chat_node(ChatNodeLL* chat_node_ll, ChatNode* deletion_node) {
         next_node = temp_node->next_node;
 
         // Assume deletion node does not exist
-        if (next_node == NULL) return;
+        if (next_node == NULL) 
+        {
+        printf("Deletion node not found\n");
+        return;
+        }
     }
-    printf("Finished loop\n");
+    printf("Deletion node found\n");
     // Store pointer to next node in a variable
     after_node = next_node->next_node;
 
