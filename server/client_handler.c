@@ -50,10 +50,8 @@ void* talk_to_client(void *_args)
 	printf("PASSED READING FROM THE CLIENT\n");
 	
 	// while the client is connected
-	/*
 	while(1)
 	{
-	*/
 		// set the ptr to the (null) head
 		ptr = args->chatroomList;
 		
@@ -218,7 +216,7 @@ void* talk_to_client(void *_args)
 				// end of this case
 			// end of the switch statement
 		}
-	//}
+	}
 	// this will never be reached
 	//return NULL;
 // end of function
