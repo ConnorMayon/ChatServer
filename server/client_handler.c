@@ -47,7 +47,7 @@ void* talk_to_client(void *_args)
 			// if the JOIN identifier was sent
 			case JOIN:
 				// DEBUG: CHECK IF FINDING CASE AND MAKING OUTPUT
-				printf("CASE: JOIN");
+				//printf("CASE: JOIN");
 				
 				// lock mutex
 				//pthread_mutex_lock(&clients_mutex);
@@ -63,9 +63,9 @@ void* talk_to_client(void *_args)
 				add_chat_node(ptr, newNode);
 				
 				// DEBUG:
-				printf("Add chat node ptr %p\n", ptr);
-				printf("Add chat node ptr next node %p\n", ptr->next_node);
-				printf("Add chat node new node %p\n", newNode);
+				//printf("Add chat node ptr %p\n", ptr);
+				//printf("Add chat node ptr next node %p\n", ptr->next_node);
+				//printf("Add chat node new node %p\n", newNode);
 				
 					// set the new node as the first bounds if not already set
 				if(args->bounds->first_node == NULL) args->bounds->first_node = newNode;
@@ -77,8 +77,8 @@ void* talk_to_client(void *_args)
 				outputMessage = create_message(JOIN, inputMessage->note, newNode);
 
 				// DEBUG: TEST THE OUTPUT MESSAGE
-				printf("---OUTPUT READING---\n");
-				printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
+				//printf("---OUTPUT READING---\n");
+				//printf("TYPE: %c, NOTE: %s, IP: %s, PORT: %i, NAME: %s.\n\n", outputMessage->message_type, outputMessage->note, outputMessage->chat_node.ip, outputMessage->chat_node.port_num, outputMessage->chat_node.log_name);
 				
 				// send the join message to the chatroom for the requesting client
 				while(ptr->next_node != NULL)
@@ -90,7 +90,7 @@ void* talk_to_client(void *_args)
 					if(ptr->chat_node != newNode)
 					{
 						// DEBUG: PRINT THREAD NUMBER
-						printf("THREAD NUMBER: %d.", ptr->chat_node->thread_num);
+						//printf("THREAD NUMBER: %d.", ptr->chat_node->thread_num);
 						
 						// write the message to the current chat node
 						send_message_to_server(ptr->chat_node->thread_num, outputMessage);
